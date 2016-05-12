@@ -142,7 +142,7 @@ public class ColorPickerPreference extends Preference implements
     }
 
     @Override
-    public void onColorChanged(int color) {
+    public void onColorChanged(int color, boolean dialogClosing) {
         if (isPersistent()) {
             persistInt(color);
         }

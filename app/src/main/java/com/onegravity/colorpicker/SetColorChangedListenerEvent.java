@@ -16,6 +16,11 @@
 
 package com.onegravity.colorpicker;
 
+/**
+ * We register the listener using an EventBus event because the ColorPickerPreference needs
+ * to re-register the listener after an orientation change (dialog is still open but no listener
+ * attached to it and the Preference doesn't hold a reference to the dialog any more).
+ */
 public class SetColorChangedListenerEvent {
 
     /**

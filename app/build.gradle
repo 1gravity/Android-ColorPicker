@@ -18,7 +18,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         minSdkVersion 14
@@ -35,12 +35,13 @@ android {
 
 dependencies {
     def eventBusLibVersion = '3.0.0'
-    def supportLibVersion = '23.3.0'
+    def supportLibVersion = '23.4.0'
 
     compile "org.greenrobot:eventbus:${eventBusLibVersion}"
 
-    // used for the material design AlertDialog
+    // used for the material design (dialogs and tab layout)
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    //compile "com.android.support:design:${supportLibVersion}"
 }
 
 apply from: '../android-artifacts.gradle'

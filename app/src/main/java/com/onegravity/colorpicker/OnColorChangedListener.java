@@ -20,5 +20,13 @@ package com.onegravity.colorpicker;
  * An interface that is called whenever the color is changed.
  */
 public interface OnColorChangedListener {
-    public void onColorChanged(int color);
+    /**
+     * This method is called whenever the color changes.
+     * This allows to update the element to configure in "real-time".
+     *
+     * @param color The new color.
+     * @param dialogClosing True if the dialog is about to close meaning this will be the last call
+     *                      to onColorChanged. False if the dialog is still open.
+     */
+    void onColorChanged(int color, boolean dialogClosing);
 }
