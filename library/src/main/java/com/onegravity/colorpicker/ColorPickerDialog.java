@@ -53,7 +53,7 @@ public class ColorPickerDialog implements OnColorChangedListener, OnTabChangeLis
 
     private Dialog mDialog;
 
-    private OnColorChangedListener mListener;
+    private ColorPickerListener mListener;
 
     private int mOrientation;
 
@@ -62,6 +62,13 @@ public class ColorPickerDialog implements OnColorChangedListener, OnTabChangeLis
     private ColorWheelComponent mColorWheelComponent;
     private ExactComponent mExactComponent;
 
+    /**
+     * @param context The context the color picker is using to build the dialog. Make sure it's the
+     *                the correct context in terms of theming.
+     * @param initialColor The initial color to show in the color picker. This is also the color
+     *                     used if the user re-sets the color or cancels the dialog.
+     * @param useOpacityBar True if the user should be able to change the opacity / alpha channel.
+     */
     public ColorPickerDialog(Context context, int initialColor, boolean useOpacityBar) {
         mId = sCount++;
         mContext = context;
@@ -70,12 +77,8 @@ public class ColorPickerDialog implements OnColorChangedListener, OnTabChangeLis
         mUseOpacityBar = useOpacityBar;
     }
 
-    public int getId() {
-        return mId;
-    }
-
     @SuppressLint("InflateParams")
-    public ColorPickerDialog show() {
+    public int show() {
         mOrientation = Util.getScreenOrientation(mContext);
 
         mRootLayout = LayoutInflater.from(mContext).inflate(R.layout.dialog_color_picker, null);
@@ -118,28 +121,26 @@ public class ColorPickerDialog implements OnColorChangedListener, OnTabChangeLis
 
         EventBus.getDefault().register(this);
 
-        return this;
+        return mId;
     }
 
     private void finalizeChanges(int color) {
         if (mListener != null) {
-            mListener.onColorChanged(color, true);
+            mListener.onColorChanged(color);
+            mListener.onDialogClosing();
         }
         EventBus.getDefault().unregister(this);
     }
 
     public void dismiss() {
-        try {
-            mDialog.dismiss();
-        } catch (Exception ignore) {}
+        try { mDialog.dismiss(); } catch (Exception ignore) {}
     }
 
     /**
-     * Set a OnColorChangedListener to get notified when the color
-     * selected by the user has changed.
+     * Set a OnColorChangedListener to get notified when the color selected by the user has changed.
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(SetColorChangedListenerEvent event) {
+    public void onEventMainThread(SetColorPickerListenerEvent event) {
         if (event.getId() == mId) {
             int screenOrientation = Util.getScreenOrientation(mContext);
             if (mOrientation != screenOrientation) {
@@ -147,15 +148,15 @@ public class ColorPickerDialog implements OnColorChangedListener, OnTabChangeLis
                 initTabs(mRootLayout);
             }
 
-            mListener = event.getOnColorChangedListener();
+            mListener = event.getListener();
         }
     }
 
     @Override
-    public void onColorChanged(int color, boolean dialogClosing) {
+    public void onColorChanged(int color) {
         mNewColor = color;
         if (mListener != null) {
-            mListener.onColorChanged(mNewColor, dialogClosing);
+            mListener.onColorChanged(mNewColor);
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Lars Werkman
+ * Copyright (C) 2015-2016 Emanuel Moecklin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,15 @@
 
 package com.onegravity.colorpicker;
 
-/**
- * An interface that is called whenever the color is changed.
- */
-public interface OnColorChangedListener {
+public interface ColorPickerListener extends OnColorChangedListener {
 
     /**
-     * This method is called whenever the color changes.
-     * This allows to update the element to configure in "real-time".
+     * This method is called if the color picker dialog is closing.
      *
-     * @param color The new color.
+     * The color picker makes sure to call the onColorChanged before calling this to communicate
+     * the last needed color change (reset to the initial color if the user selected cancel, set the
+     * last picked color if the user selected ok).
      */
-    void onColorChanged(int color);
+    void onDialogClosing();
 
 }

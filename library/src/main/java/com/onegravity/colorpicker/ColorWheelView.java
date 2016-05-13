@@ -750,7 +750,7 @@ public class ColorWheelView extends View {
             mCenterOldPaint.setColor(color);
         }
         if (mOnColorChangedListener != null && color != mOldChangedListenerColor) {
-            mOnColorChangedListener.onColorChanged(color, false);
+            mOnColorChangedListener.onColorChanged(color);
             mOldChangedListenerColor = color;
         }
         invalidate();

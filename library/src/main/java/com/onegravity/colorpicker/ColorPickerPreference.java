@@ -26,15 +26,13 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.greenrobot.eventbus.EventBus;
-
 /**
  * A preference type that allows a user to choose a color
  */
 public class ColorPickerPreference extends Preference implements
         PreferenceManager.OnActivityDestroyListener,
         Preference.OnPreferenceClickListener,
-        OnColorChangedListener {
+        ColorPickerListener {
 
     private static final String androidns = "http://schemas.android.com/apk/res/android";
 
@@ -111,7 +109,7 @@ public class ColorPickerPreference extends Preference implements
         mPreferenceView = super.onCreateView(parent);
         ColorPickerPreferenceWidget.setPreviewColor(mPreferenceView, getValue(), isEnabled());
         // we need this to have a listener after a screen rotation
-        EventBus.getDefault().post(new SetColorChangedListenerEvent(mPickerId, this));
+        SetColorPickerListenerEvent.setListener(mPickerId, this);
         return mPreferenceView;
     }
 
@@ -142,7 +140,7 @@ public class ColorPickerPreference extends Preference implements
     }
 
     @Override
-    public void onColorChanged(int color, boolean dialogClosing) {
+    public void onColorChanged(int color) {
         if (isPersistent()) {
             persistInt(color);
         }
@@ -155,10 +153,13 @@ public class ColorPickerPreference extends Preference implements
     }
 
     @Override
+    public void onDialogClosing() {}
+
+    @Override
     public boolean onPreferenceClick(Preference preference) {
-        mPicker = new ColorPickerDialog(getContext(), getValue(), mAlphaSliderEnabled).show();
-        mPickerId = mPicker.getId();
-        EventBus.getDefault().post(new SetColorChangedListenerEvent(mPickerId, this));
+        mPicker = new ColorPickerDialog(getContext(), getValue(), mAlphaSliderEnabled);
+        mPickerId = mPicker.show();
+        SetColorPickerListenerEvent.setListener(mPickerId, this);
         return false;
     }
 
