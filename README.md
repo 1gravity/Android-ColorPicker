@@ -8,7 +8,8 @@ A demo app can be found here: https://play.google.com/store/apps/details?id=com.
 
 ![Color picker dark theme](art/screenshot_0_framed_small.png?raw=true "Color picker dark theme") ![Color picker light theme](art/screenshot_1_framed_small.png?raw=true "Color picker light theme")
 
-![Color picker preference](art/screenshot_2_framed_small.png?raw=true "Color picker preference")
+![Color picker demo app](art/screenshot_2_framed_small.png?raw=true "Color picker demo app")
+![Color picker preference](art/screenshot_3_framed_small.png?raw=true "Color picker preference")
 
 Features
 --------
