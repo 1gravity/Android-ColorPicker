@@ -6,7 +6,9 @@ The Android Color Picker is a beautifully designed component based on Lars Werkm
 Unlike the original it's shown in a dialog box, allows entering an (A)RGB value and includes a color picker Preference. 
 A demo app can be found here: https://play.google.com/store/apps/details?id=com.onegravity.colorpicker.demo.
 
-![Images](Here go the screenshots)
+![Color picker dark theme](art/screenshot_0_framed_small.png?raw=true "Color picker dark theme") ![Color picker light theme](art/screenshot_1_framed_small.png?raw=true "Color picker light theme")
+
+![Color picker preference](art/screenshot_2_framed_small.png?raw=true "Color picker preference")
 
 Features
 --------
