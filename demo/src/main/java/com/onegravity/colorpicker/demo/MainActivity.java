@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // initialize layout
         setContentView(R.layout.main);
-        mRootLayout = findViewById(R.id.root_layout);
 
         // configure background color and set listener
+        mRootLayout = findViewById(R.id.root_layout);
         mRootLayout.setBackgroundColor(mBackgroundColor);
         if (mDialogId != -1) {
             SetColorPickerListenerEvent.setListener(mDialogId, this);
