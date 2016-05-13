@@ -80,7 +80,7 @@ Please check out the included demo for some sample code.
 Issues
 ------
 
-If you have an issues with this library, please open a issue here: https://github.com/1gravity/Android-RTEditor/issues and provide enough information to reproduce it reliably. The following information needs to be provided:
+If you have an issues with this library, please open a issue here: https://github.com/1gravity/Android-ColorPicker/issues and provide enough information to reproduce it reliably. The following information needs to be provided:
 
 * Which version of the SDK are you using?
 * Which Android build are you using? (e.g. MPZ44Q)
