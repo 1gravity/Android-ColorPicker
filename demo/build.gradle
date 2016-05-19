@@ -21,7 +21,7 @@ android {
 
 dependencies {
     // use this to compile/run locally
-     compile project(':library')
+    compile project(':library')
 
     // or this to use the latest published library
     // compile 'com.1gravity:android-colorpicker:2.0.0'
