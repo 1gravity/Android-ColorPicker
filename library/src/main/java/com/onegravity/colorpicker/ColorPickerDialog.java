@@ -170,7 +170,7 @@ public class ColorPickerDialog implements OnColorChangedListener, OnTabChangeLis
     private String mCurrentTab;
 
     private void initTabs(View rootLayout) {
-   		/*
+        /*
          * Create tabs
          */
         mTabHost = (TabHost) rootLayout.findViewById(android.R.id.tabhost);

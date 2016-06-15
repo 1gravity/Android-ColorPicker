@@ -17,18 +17,18 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<com.onegravity.colorpicker.ColorPickerPreference
-		android:key="color_setting_1"
-		android:title="@string/setting_1"
-		android:summary="@string/setting_1_desc"
-		alphaSlider="true"
-		android:defaultValue="@color/default_color_1"/>
+    <com.onegravity.colorpicker.ColorPickerPreference
+        alphaSlider="true"
+        android:defaultValue="@color/default_color_1"
+        android:key="color_setting_1"
+        android:summary="@string/setting_1_desc"
+        android:title="@string/setting_1" />
 
-	<com.onegravity.colorpicker.ColorPickerPreference
-		android:key="color_setting_2"
-		android:title="@string/setting_2"
-		android:summary="@string/setting_2_desc"
-		alphaSlider="false"
-		android:defaultValue="@color/default_color_2"/>
+    <com.onegravity.colorpicker.ColorPickerPreference
+        alphaSlider="false"
+        android:defaultValue="@color/default_color_2"
+        android:key="color_setting_2"
+        android:summary="@string/setting_2_desc"
+        android:title="@string/setting_2" />
 
 </PreferenceScreen>
