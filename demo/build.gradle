@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         applicationId "com.onegravity.colorpicker.demo"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.0.3"
     }
     buildTypes {
         release {
@@ -21,8 +21,8 @@ android {
 
 dependencies {
     // use this to compile/run locally
-    compile project(':library')
+    //compile project(':library')
 
     // or this to use the latest published library
-    // compile 'com.1gravity:android-colorpicker:2.0.0'
+    compile 'com.1gravity:android-colorpicker:2.0.2'
 }

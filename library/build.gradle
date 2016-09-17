@@ -18,7 +18,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         minSdkVersion 14
@@ -35,7 +35,7 @@ android {
 
 dependencies {
     def eventBusLibVersion = '3.0.0'
-    def supportLibVersion = '24.0.0'
+    def supportLibVersion = '24.2.1'
 
     compile "org.greenrobot:eventbus:${eventBusLibVersion}"
 
