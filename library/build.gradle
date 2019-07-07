@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Emanuel Moecklin
+ * Copyright (C) 2015-2019 Emanuel Moecklin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.1'
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 29
     }
 
     buildTypes {
@@ -38,13 +37,10 @@ android {
 }
 
 dependencies {
-    def eventBusLibVersion = '3.0.0'
-    def supportLibVersion = '26.0.2'
-
-    compile "org.greenrobot:eventbus:${eventBusLibVersion}"
+    implementation "org.greenrobot:eventbus:3.1.1"
 
     // used for the material design (dialogs and tab layout)
-    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    api "androidx.appcompat:appcompat:1.0.2"
 }
 
 apply from: '../android-artifacts.gradle'

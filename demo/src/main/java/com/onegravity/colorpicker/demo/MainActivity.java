@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Emanuel Moecklin
+ * Copyright (C) 2015-2019 Emanuel Moecklin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.onegravity.colorpicker.ColorPickerDialog;
 import com.onegravity.colorpicker.ColorPickerListener;

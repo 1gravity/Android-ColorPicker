@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Copyright (C) 2015-2016 Emanuel Moecklin
+  Copyright (C) 2015-2019 Emanuel Moecklin
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -18,8 +18,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.onegravity.colorpicker"
     android:versionCode="1"
-    android:versionName="1.0" >
-
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="23" />
-
-</manifest>
+    android:versionName="1.0" />
