@@ -24,13 +24,14 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 /**
  * The widget that shows the selected color for a Preference.
  * It's optimized to update in "real-time" when the user picks a color from the color wheel.
  */
-public class ColorPickerPreferenceWidget extends ImageView {
+public class ColorPickerPreferenceWidget extends AppCompatImageView {
 
     private static final String IMAGE_VIEW_TAG = "#IMAGE_VIEW_TAG#";
 
@@ -134,46 +135,30 @@ public class ColorPickerPreferenceWidget extends ImageView {
     }
 
     static void setPreviewColor(View preferenceView, int color, boolean isEnabled) {
-        if (preferenceView != null && preferenceView instanceof ViewGroup) {
+        ViewGroup widgetFrameView = preferenceView.findViewById(R.id.color_view_frame);
+        ColorPickerPreferenceWidget widgetView = preferenceView.findViewById(R.id.color_view);
+        if (widgetFrameView != null && widgetView != null) {
             Context context = preferenceView.getContext();
-            ViewGroup widgetFrameView = ((ViewGroup) preferenceView.findViewById(android.R.id.widget_frame));
+            widgetFrameView.removeAllViews();
+            // remove already created preview image and create new one
+            widgetView = new ColorPickerPreferenceWidget(context);
+            widgetView.setTag(IMAGE_VIEW_TAG);
+            widgetFrameView.setVisibility(View.VISIBLE);
+            widgetFrameView.setPadding(
+                    widgetFrameView.getPaddingLeft(),
+                    widgetFrameView.getPaddingTop(),
+                    (int) (Util.getDisplayDensity(context) * 8),
+                    widgetFrameView.getPaddingBottom()
+            );
+            widgetFrameView.addView(widgetView);
 
-            if (widgetFrameView != null) {
-
-                ColorPickerPreferenceWidget widgetView = null;
-
-                // find already created preview image
-                int count = widgetFrameView.getChildCount();
-                for (int i = 0; i < count; i++) {
-                    View view = widgetFrameView.getChildAt(i);
-                    if (view instanceof ColorPickerPreferenceWidget && IMAGE_VIEW_TAG.equals(view.getTag())) {
-                        widgetView = (ColorPickerPreferenceWidget) view;
-                        break;
-                    }
-                }
-                if (widgetView == null) {
-                    // remove already created preview image and create new one
-                    if (count > 0) widgetFrameView.removeViews(0, count);
-                    widgetView = new ColorPickerPreferenceWidget(context);
-                    widgetView.setTag(IMAGE_VIEW_TAG);
-                    widgetFrameView.setVisibility(View.VISIBLE);
-                    widgetFrameView.setPadding(
-                            widgetFrameView.getPaddingLeft(),
-                            widgetFrameView.getPaddingTop(),
-                            (int) (Util.getDisplayDensity(context) * 8),
-                            widgetFrameView.getPaddingBottom()
-                    );
-                    widgetFrameView.addView(widgetView);
-                }
-
-                // determine and set colors
-                int borderColor = Color.WHITE;
-                if (!isEnabled) {
-                    color = reduceBrightness(color, 1);
-                    borderColor = reduceBrightness(borderColor, 1);
-                }
-                widgetView.setColor(color, borderColor);
+            // determine and set colors
+            int borderColor = Color.WHITE;
+            if (!isEnabled) {
+                color = reduceBrightness(color, 1);
+                borderColor = reduceBrightness(borderColor, 1);
             }
+            widgetView.setColor(color, borderColor);
         }
     }
 

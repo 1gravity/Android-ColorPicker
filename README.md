@@ -50,7 +50,7 @@ Simply use one of the AppCompat themes (Theme.AppCompat, Theme.AppCompat.Light o
 #### **Use as Preference**
 To use the color picker as a preference add this to your preferences file:
 ```
-<com.onegravity.colorpicker.ColorPickerPreference
+<com.onegravity.colorpreference.ColorPickerPreference
     android:key="my_setting"
     android:title="@string/my_setting"
     android:summary="@string/my_setting_summary"
