@@ -18,10 +18,11 @@
     android:layout_width="38dp"
     android:layout_height="38dp">
 
-    <com.onegravity.colorpicker.ColorPickerPreferenceWidget
+    <com.onegravity.colorpreference.ColorPreferenceView
         android:id="@+id/color_view"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_gravity="center"
         android:scaleType="fitXY" />
+
 </FrameLayout>

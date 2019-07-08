@@ -24,9 +24,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.onegravity.colorpicker.ColorPickerDialog;
+import com.onegravity.colorpicker.ColorPicker;
 import com.onegravity.colorpicker.ColorPickerListener;
-import com.onegravity.colorpicker.SetColorPickerListenerEvent;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ColorPickerListener {
 
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRootLayout = findViewById(R.id.root_layout);
         mRootLayout.setBackgroundColor(mBackgroundColor);
         if (mDialogId != -1) {
-            SetColorPickerListenerEvent.setListener(mDialogId, this);
+            ColorPicker.setListener(mDialogId, this);
         }
 
         // configure color settings
@@ -86,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (id == R.id.pick_color) {
             if (mDialogId == -1) {
                 // the dialog will stay open so don't open it again after an orientation change
-                mDialogId = new ColorPickerDialog(this, mBackgroundColor, true).show();
-                SetColorPickerListenerEvent.setListener(mDialogId, this);
+                mDialogId = new ColorPicker(this, mBackgroundColor, true).show();
+                ColorPicker.setListener(mDialogId, this);
             }
         }
 
@@ -109,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Set the configured settings.
      */
-    @SuppressWarnings("deprecation")
     private void configureSettingColors() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 

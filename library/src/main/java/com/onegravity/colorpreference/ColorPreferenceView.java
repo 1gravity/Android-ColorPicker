@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.onegravity.colorpicker;
+package com.onegravity.colorpreference;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -22,18 +22,18 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
+import com.onegravity.colorpicker.Util;
 import com.onegravity.utils.AlphaPatternDrawable;
 
 /**
  * The widget that shows the selected color for a Preference.
  * It's optimized to update in "real-time" when the user picks a color from the color wheel.
  */
-public class ColorPickerPreferenceWidget extends AppCompatImageView {
+public class ColorPreferenceView extends AppCompatImageView {
 
     private static final String IMAGE_VIEW_TAG = "#IMAGE_VIEW_TAG#";
 
@@ -48,17 +48,17 @@ public class ColorPickerPreferenceWidget extends AppCompatImageView {
     private int mBorderColor;
     private Paint mBorderColorPaint;
 
-    public ColorPickerPreferenceWidget(Context context) {
+    public ColorPreferenceView(Context context) {
         super(context);
         init(context, null);
     }
 
-    public ColorPickerPreferenceWidget(Context context, AttributeSet attrs) {
+    public ColorPreferenceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public ColorPickerPreferenceWidget(Context context, AttributeSet attrs, int defStyle) {
+    public ColorPreferenceView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }

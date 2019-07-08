@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.onegravity.colorpicker.ColorPickerPreferenceWidget;
 import com.onegravity.colorpicker.R;
 
 
@@ -61,8 +60,8 @@ public class ColorPreference extends Preference implements ColorDialog.OnColorSe
         super.onBindView(view);
         ImageView colorView = view.findViewById(R.id.color_view);
         if (colorView != null) {
-            if (colorView instanceof ColorPickerPreferenceWidget) {
-                ColorPickerPreferenceWidget widgetView = (ColorPickerPreferenceWidget) colorView;
+            if (colorView instanceof ColorPreferenceView) {
+                ColorPreferenceView widgetView = (ColorPreferenceView) colorView;
                 widgetView.setPreviewColor(value, true);
             }
             // todo add shape

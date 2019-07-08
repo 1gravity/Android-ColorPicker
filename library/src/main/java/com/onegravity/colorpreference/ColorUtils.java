@@ -2,25 +2,9 @@ package com.onegravity.colorpreference;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.widget.ImageView;
 
 import androidx.annotation.ArrayRes;
-
-import com.onegravity.colorpicker.ColorPickerPreferenceWidget;
-import com.onegravity.colorpicker.R;
-import com.onegravity.utils.AlphaPatternDrawable;
 
 /**
  * Created by Kizito Nwose on 9/28/2016.

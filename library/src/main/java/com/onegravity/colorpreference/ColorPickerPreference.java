@@ -19,13 +19,13 @@ package com.onegravity.colorpreference;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.onegravity.colorpicker.ColorPickerDialog;
+import com.onegravity.colorpicker.ColorPicker;
 import com.onegravity.colorpicker.ColorPickerListener;
-import com.onegravity.colorpicker.SetColorPickerListenerEvent;
 
 /**
  * A preference type that allows a user to choose a color
  */
+@SuppressWarnings("unused")
 public class ColorPickerPreference extends ColorPreferenceCompat implements ColorPickerListener {
 
     public ColorPickerPreference(Context context) {
@@ -40,16 +40,16 @@ public class ColorPickerPreference extends ColorPreferenceCompat implements Colo
         super(context, attrs, defStyle);
     }
 
-    private ColorPickerDialog mPicker;
+    private ColorPicker mPicker;
     private int mPickerId;
 
     private boolean mAlphaSliderEnabled = true;
 
     @Override
     protected void onClick() {
-        mPicker = new ColorPickerDialog(getContext(), getValue(), mAlphaSliderEnabled);
+        mPicker = new ColorPicker(getContext(), getValue(), mAlphaSliderEnabled);
         mPickerId = mPicker.show();
-        SetColorPickerListenerEvent.setListener(mPickerId, this);
+        ColorPicker.setListener(mPickerId, this);
     }
 
     @Override

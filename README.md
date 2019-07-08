@@ -64,7 +64,7 @@ The (A)RGB input field will reflect this attribute as well (allow/disallow enter
 To use the color picker as a dialog call:
 ```
 int dialogId = new ColorPickerDialog(this, initialColor, true).show();
-SetColorPickerListenerEvent.setListener(mDialogId, this);
+ColorPickerListenerEvent.setListener(mDialogId, this);
 ```
 The first line creates and opens the color picker dialog.
 The **context** is used to build the dialog. Make sure it's the the correct context in terms of theming.
@@ -74,7 +74,7 @@ Set **useOpacityBar** to True if the user should be able to change the opacity /
 The color picker communicates the color changes to its caller through the ColorPickerListener. Instead of simply passing the listener to the ColorPickerDialog constructor (or using a setter method), we use EventBus.
 Whoever has dealt with dialogs and orientation changes knows the numerous issues especially if you expect some return value from that dialog (a color in this case).
 Using a unique identifier for the color picker dialog and EventBus allows to re-set the listener after an orientation change very easily.
-All you need to do is save the unique identifier in onSaveInstanceState and restore it in onCreate (fragments will usually persist the identifier) and call SetColorPickerListenerEvent.setListener() again.
+All you need to do is save the unique identifier in onSaveInstanceState and restore it in onCreate (fragments will usually persist the identifier) and call ColorPickerListenerEvent.setListener() again.
 Please check out the included demo for some sample code.
 
 Issues
