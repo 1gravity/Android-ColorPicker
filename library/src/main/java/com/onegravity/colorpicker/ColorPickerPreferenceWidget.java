@@ -136,32 +136,17 @@ public class ColorPickerPreferenceWidget extends AppCompatImageView {
         canvas.drawLine(x, y + mCurrentSize, x + mCurrentSize, y + mCurrentSize, mBorderColorPaint);
     }
 
-    static void setPreviewColor(View preferenceView, int color, boolean isEnabled) {
-        ViewGroup widgetFrameView = preferenceView.findViewById(R.id.color_view_frame);
-        ColorPickerPreferenceWidget widgetView = preferenceView.findViewById(R.id.color_view);
-        if (widgetFrameView != null && widgetView != null) {
-            Context context = preferenceView.getContext();
-            widgetFrameView.removeAllViews();
-            // remove already created preview image and create new one
-            widgetView = new ColorPickerPreferenceWidget(context);
-            widgetView.setTag(IMAGE_VIEW_TAG);
-            widgetFrameView.setVisibility(View.VISIBLE);
-            widgetFrameView.setPadding(
-                    widgetFrameView.getPaddingLeft(),
-                    widgetFrameView.getPaddingTop(),
-                    (int) (Util.getDisplayDensity(context) * 8),
-                    widgetFrameView.getPaddingBottom()
-            );
-            widgetFrameView.addView(widgetView);
+    public void setPreviewColor(int color, boolean isEnabled) {
+        setTag(IMAGE_VIEW_TAG);
 
-            // determine and set colors
-            int borderColor = Color.WHITE;
-            if (!isEnabled) {
-                color = reduceBrightness(color, 1);
-                borderColor = reduceBrightness(borderColor, 1);
-            }
-            widgetView.setColor(color, borderColor);
+        // determine and set colors
+        int borderColor = Color.WHITE;
+        if (!isEnabled) {
+            color = reduceBrightness(color, 1);
+            borderColor = reduceBrightness(borderColor, 1);
         }
+
+        setColor(color, borderColor);
     }
 
     private static int reduceBrightness(int color, int factor) {

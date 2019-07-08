@@ -7,6 +7,8 @@ import android.widget.ImageView;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
+
+import com.onegravity.colorpicker.ColorPickerPreferenceWidget;
 import com.onegravity.colorpicker.R;
 
 /**
@@ -62,7 +64,12 @@ public class ColorPreferenceCompat extends Preference implements ColorDialog.OnC
         super.onBindViewHolder(holder);
         ImageView colorView = (ImageView) holder.findViewById(R.id.color_view);
         if (colorView != null) {
-            ColorUtils.setColorViewValue(colorView, value, false, colorShape);
+            if (colorView instanceof ColorPickerPreferenceWidget) {
+                ColorPickerPreferenceWidget widgetView = (ColorPickerPreferenceWidget) colorView;
+                widgetView.setPreviewColor(value, true);
+            }
+            // todo add shape
+//            ColorUtils.setColorViewValue(colorView, value, false, colorShape);
         }
     }
 
