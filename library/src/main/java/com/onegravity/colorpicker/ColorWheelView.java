@@ -35,6 +35,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.onegravity.utils.AlphaPatternDrawable;
+
 /**
  * Displays a holo-themed color picker.
  * <p>

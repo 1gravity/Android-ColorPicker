@@ -75,15 +75,6 @@ public class ColorPreferenceCompat extends Preference implements ColorDialog.OnC
     }
 
     @Override
-    protected void onClick() {
-        super.onClick();
-        if (showDialog) {
-            ColorUtils.showDialog(getContext(), this, getFragmentTag(),
-                    numColumns, colorShape, colorChoices, getValue());
-        }
-    }
-
-    @Override
     public void onAttached() {
         super.onAttached();
         //helps during activity re-creation

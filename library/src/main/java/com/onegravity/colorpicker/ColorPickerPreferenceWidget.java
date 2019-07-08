@@ -27,6 +27,8 @@ import android.view.ViewGroup;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
+import com.onegravity.utils.AlphaPatternDrawable;
+
 /**
  * The widget that shows the selected color for a Preference.
  * It's optimized to update in "real-time" when the user picks a color from the color wheel.

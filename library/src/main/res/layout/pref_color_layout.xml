@@ -18,7 +18,7 @@
     android:layout_width="32dp"
     android:layout_height="32dp">
 
-    <ImageView
+    <com.onegravity.colorpicker.ColorPickerPreferenceWidget
         android:id="@+id/color_view"
         android:layout_width="32dp"
         android:layout_height="32dp"
