@@ -9,9 +9,9 @@ import androidx.annotation.ArrayRes;
 /**
  * Created by Kizito Nwose on 9/28/2016.
  */
-public class ColorUtils {
+class ColorUtils {
 
-    public static int[] extractColorArray(@ArrayRes int arrayId, Context context) {
+    static int[] extractColorArray(@ArrayRes int arrayId, Context context) {
         String[] choicesString = context.getResources().getStringArray(arrayId);
         int[] choicesInt = context.getResources().getIntArray(arrayId);
 
@@ -28,8 +28,8 @@ public class ColorUtils {
         return colorChoices;
     }
 
-    public static void showDialog(Context context, ColorDialog.OnColorSelectedListener listener, String tag,
-                                  int numColumns, ColorShape colorShape, int[] colorChoices, int selectedColorValue) {
+    static void showDialog(Context context, ColorDialog.OnColorSelectedListener listener, String tag,
+                           int numColumns, ColorShape colorShape, int[] colorChoices, int selectedColorValue) {
         ColorDialog fragment = ColorDialog.newInstance(numColumns, colorShape, colorChoices, selectedColorValue);
         fragment.setOnColorSelectedListener(listener);
 
@@ -42,7 +42,7 @@ public class ColorUtils {
         }
     }
 
-    public static void attach(Context context, ColorDialog.OnColorSelectedListener listener, String tag) {
+    static void attach(Context context, ColorDialog.OnColorSelectedListener listener, String tag) {
         Activity activity = Utils.resolveContext(context);
         if (activity != null) {
             ColorDialog fragment = (ColorDialog) activity.getFragmentManager().findFragmentByTag(tag);
