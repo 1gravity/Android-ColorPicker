@@ -17,10 +17,10 @@
 package com.onegravity.colorpreference;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 
@@ -40,12 +40,8 @@ public class ColorPreferenceView extends AppCompatImageView {
     private int mDefaultSize;
     private int mCurrentSize;
 
-    private Bitmap mAlphaPattern;
-
-    private int mColor;
     private Paint mColorPaint;
 
-    private int mBorderColor;
     private Paint mBorderColorPaint;
 
     public ColorPreferenceView(Context context) {
@@ -76,20 +72,22 @@ public class ColorPreferenceView extends AppCompatImageView {
         setLayoutParams(new ViewGroup.LayoutParams(wrap, wrap));
     }
 
+    private Rect mCenterRectangle = new Rect();
+
+    private AlphaPatternDrawable mAlphaPattern;
+
     private void setAlphaPattern(Context context, int size) {
-        AlphaPatternDrawable apd = new AlphaPatternDrawable(context);
-        mAlphaPattern = apd.generatePatternBitmap(size, size);
-        setImageBitmap(mAlphaPattern);
+        mAlphaPattern = new AlphaPatternDrawable(context);
+        mAlphaPattern.generatePatternBitmap(size - 2, size - 2);
+        mCenterRectangle.set(new Rect(0, 0, size, size));
     }
 
     public void setColor(int color, int borderColor) {
-        mColor = color;
         mColorPaint = new Paint();
-        mColorPaint.setColor(mColor);
+        mColorPaint.setColor(color);
 
-        mBorderColor = borderColor;
         mBorderColorPaint = new Paint();
-        mBorderColorPaint.setColor(mBorderColor);
+        mBorderColorPaint.setColor(borderColor);
         mBorderColorPaint.setStrokeWidth(2f);
 
         invalidate();
@@ -125,6 +123,11 @@ public class ColorPreferenceView extends AppCompatImageView {
 
         int x = 0;
         int y = 0;
+
+        if (mAlphaPattern != null) {
+            mAlphaPattern.setBounds(mCenterRectangle);
+            mAlphaPattern.draw(canvas);
+        }
 
         // draw color
         canvas.drawRect(x, y, mCurrentSize, mCurrentSize, mColorPaint);

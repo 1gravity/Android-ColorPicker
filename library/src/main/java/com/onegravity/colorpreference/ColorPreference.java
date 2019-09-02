@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import com.onegravity.colorpicker.R;
 
-
 public class ColorPreference extends Preference implements ColorDialog.OnColorSelectedListener {
     private int[] colorChoices = {};
     private int value = 0;
