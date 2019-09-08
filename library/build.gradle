@@ -37,9 +37,9 @@ android {
 }
 
 dependencies {
-    implementation "org.greenrobot:eventbus:3.1.1"
+    api "org.greenrobot:eventbus:3.1.1"
 
-    implementation "androidx.preference:preference:1.0.0"
+    api "androidx.preference:preference:1.0.0"
 
     // used for the material design (dialogs and tab layout)
     api "androidx.appcompat:appcompat:1.0.2"

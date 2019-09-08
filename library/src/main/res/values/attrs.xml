@@ -28,7 +28,7 @@
         <attr name="colorShape" />
         <attr name="viewSize" />
         <attr name="showDialog" />
-
+        <attr name="alphaSlider" format="boolean" />
     </declare-styleable>
 
 
