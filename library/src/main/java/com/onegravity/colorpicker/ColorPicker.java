@@ -35,7 +35,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class ColorPickerDialog implements OnColorChangedListener, OnTabChangeListener {
+public class ColorPicker implements OnColorChangedListener, OnTabChangeListener {
 
     private static final String WHEEL_TAG = "wheel";
     private static final String EXACT_TAG = "exact";
@@ -70,12 +70,23 @@ public class ColorPickerDialog implements OnColorChangedListener, OnTabChangeLis
      *                     used if the user re-sets the color or cancels the dialog.
      * @param useOpacityBar True if the user should be able to change the opacity / alpha channel.
      */
-    public ColorPickerDialog(Context context, int initialColor, boolean useOpacityBar) {
+    public ColorPicker(Context context, int initialColor, boolean useOpacityBar) {
         mId = sCount++;
         mContext = context;
         mInitialColor = initialColor;
         mNewColor = initialColor;
         mUseOpacityBar = useOpacityBar;
+    }
+
+    /**
+     * Call this to register an ColorPickerListenerEvent with a certain dialog
+     *
+     * @param dialogId This identifies the dialog. It's the id returned by the ColorPicker.show() method.
+     * @param listener The listener to register.
+     */
+    static public void setListener(int dialogId, ColorPickerListener listener) {
+        ColorPickerListenerEvent event = new ColorPickerListenerEvent(dialogId, listener);
+        EventBus.getDefault().post(event);
     }
 
     @SuppressLint("InflateParams")
@@ -141,7 +152,7 @@ public class ColorPickerDialog implements OnColorChangedListener, OnTabChangeLis
      * Set a OnColorChangedListener to get notified when the color selected by the user has changed.
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(SetColorPickerListenerEvent event) {
+    public void onEventMainThread(ColorPickerListenerEvent event) {
         if (event.getId() == mId) {
             int screenOrientation = Util.getScreenOrientation(mContext);
             if (mOrientation != screenOrientation) {
@@ -184,11 +195,11 @@ public class ColorPickerDialog implements OnColorChangedListener, OnTabChangeLis
             @Override
             public View createTabContent(String tag) {
                 if (tag.equals(WHEEL_TAG)) {
-                    mColorWheelComponent = new ColorWheelComponent(mInitialColor, mNewColor, mUseOpacityBar, ColorPickerDialog.this);
+                    mColorWheelComponent = new ColorWheelComponent(mInitialColor, mNewColor, mUseOpacityBar, ColorPicker.this);
                     return mColorWheelComponent.createView(mContext);
                 }
                 else if (tag.equals(EXACT_TAG)) {
-                    mExactComponent = new ExactComponent(mInitialColor, mNewColor, mUseOpacityBar, ColorPickerDialog.this);
+                    mExactComponent = new ExactComponent(mInitialColor, mNewColor, mUseOpacityBar, ColorPicker.this);
                     return mExactComponent.createView(mContext);
                 }
                 return null;

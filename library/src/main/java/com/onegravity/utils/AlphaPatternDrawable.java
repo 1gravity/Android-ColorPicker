@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.onegravity.colorpicker;
+package com.onegravity.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -25,6 +25,10 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
+import androidx.annotation.NonNull;
+
+import com.onegravity.colorpicker.Util;
+
 /**
  * This drawable that draws a simple white and gray chessboard pattern.
  * It's pattern you will often see as a background behind a
@@ -32,7 +36,7 @@ import android.graphics.drawable.Drawable;
  */
 public class AlphaPatternDrawable extends Drawable {
 
-    private int mRectangleSize = 10;
+    private int mRectangleSize;
 
     private Paint mPaint = new Paint();
     private Paint mPaintWhite = new Paint();
@@ -54,7 +58,7 @@ public class AlphaPatternDrawable extends Drawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         if (mBitmap != null) {
             canvas.drawBitmap(mBitmap, null, getBounds(), mPaint);
         }
@@ -78,7 +82,7 @@ public class AlphaPatternDrawable extends Drawable {
         int height = bounds.height();
         int width = bounds.width();
 
-        numRectanglesHorizontal = (int) Math.ceil((width / mRectangleSize));
+        numRectanglesHorizontal = (int) Math.ceil(((double) width / mRectangleSize));
         numRectanglesVertical = (int) Math.ceil(height / mRectangleSize);
 
         generatePatternBitmap();
@@ -131,7 +135,7 @@ public class AlphaPatternDrawable extends Drawable {
 
         Canvas canvas = new Canvas(bitmap);
 
-        int numRectanglesHorizontal = (int) Math.ceil((w / mRectangleSize));
+        int numRectanglesHorizontal = (int) Math.ceil(((double) w / mRectangleSize));
         int numRectanglesVertical = (int) Math.ceil(h / mRectangleSize);
 
         Rect r = new Rect();

@@ -16,25 +16,12 @@
 
 package com.onegravity.colorpicker;
 
-import org.greenrobot.eventbus.EventBus;
-
 /**
  * We register the listener using EventBus because the ColorPickerPreference needs to re-register
  * the listener after an orientation change (the dialog is still open but the listener isn't
  * attached to it any more since we can't persist it).
  */
-public class SetColorPickerListenerEvent {
-
-    /**
-     * Call this to register an SetColorPickerListenerEvent with a certain dialog
-     *
-     * @param dialogId This identifies the dialog. It's the id returned by the ColorPickerDialog.show() method.
-     * @param listener The listener to register.
-     */
-    static public void setListener(int dialogId, ColorPickerListener listener) {
-        SetColorPickerListenerEvent event = new SetColorPickerListenerEvent(dialogId, listener);
-        EventBus.getDefault().post(event);
-    }
+public class ColorPickerListenerEvent {
 
     /**
      * The is is used to map the publisher to the subscriber.
@@ -44,7 +31,7 @@ public class SetColorPickerListenerEvent {
 
     private final ColorPickerListener mListener;
 
-    private SetColorPickerListenerEvent(int id, ColorPickerListener listener) {
+    ColorPickerListenerEvent(int id, ColorPickerListener listener) {
         mId = id;
         mListener = listener;
     }

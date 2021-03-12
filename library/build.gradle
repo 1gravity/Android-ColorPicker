@@ -20,7 +20,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 30
     }
 
@@ -37,7 +37,9 @@ android {
 }
 
 dependencies {
-    implementation "org.greenrobot:eventbus:3.1.1"
+    api "org.greenrobot:eventbus:3.1.1"
+
+    api "androidx.preference:preference:1.0.0"
 
     // used for the material design (dialogs and tab layout)
     api "androidx.appcompat:appcompat:1.2.0"

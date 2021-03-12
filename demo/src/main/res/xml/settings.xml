@@ -15,20 +15,24 @@
   limitations under the License.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.onegravity.colorpicker.ColorPickerPreference
-        alphaSlider="true"
+    <com.onegravity.colorpreference.ColorPickerPreference
         android:defaultValue="@color/default_color_1"
         android:key="color_setting_1"
         android:summary="@string/setting_1_desc"
-        android:title="@string/setting_1" />
+        android:title="@string/setting_1"
+        app:iconSpaceReserved="false"
+        app:colorShape="circle" />
 
-    <com.onegravity.colorpicker.ColorPickerPreference
-        alphaSlider="false"
+    <com.onegravity.colorpreference.ColorPickerPreference
         android:defaultValue="@color/default_color_2"
         android:key="color_setting_2"
         android:summary="@string/setting_2_desc"
-        android:title="@string/setting_2" />
+        android:title="@string/setting_2"
+        app:iconSpaceReserved="false"
+        app:colorShape="circle" />
 
-</PreferenceScreen>
+</androidx.preference.PreferenceScreen>

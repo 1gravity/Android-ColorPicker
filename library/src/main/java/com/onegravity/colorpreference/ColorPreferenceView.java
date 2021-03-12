@@ -14,48 +14,47 @@
  * limitations under the License.
  */
 
-package com.onegravity.colorpicker;
+package com.onegravity.colorpreference;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+
+import androidx.appcompat.widget.AppCompatImageView;
+
+import com.onegravity.colorpicker.Util;
+import com.onegravity.utils.AlphaPatternDrawable;
 
 /**
  * The widget that shows the selected color for a Preference.
  * It's optimized to update in "real-time" when the user picks a color from the color wheel.
  */
-public class ColorPickerPreferenceWidget extends ImageView {
+public class ColorPreferenceView extends AppCompatImageView {
 
     private static final String IMAGE_VIEW_TAG = "#IMAGE_VIEW_TAG#";
 
     private int mDefaultSize;
     private int mCurrentSize;
 
-    private Bitmap mAlphaPattern;
-
-    private int mColor;
     private Paint mColorPaint;
 
-    private int mBorderColor;
     private Paint mBorderColorPaint;
 
-    public ColorPickerPreferenceWidget(Context context) {
+    public ColorPreferenceView(Context context) {
         super(context);
         init(context, null);
     }
 
-    public ColorPickerPreferenceWidget(Context context, AttributeSet attrs) {
+    public ColorPreferenceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public ColorPickerPreferenceWidget(Context context, AttributeSet attrs, int defStyle) {
+    public ColorPreferenceView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
@@ -73,20 +72,22 @@ public class ColorPickerPreferenceWidget extends ImageView {
         setLayoutParams(new ViewGroup.LayoutParams(wrap, wrap));
     }
 
+    private Rect mCenterRectangle = new Rect();
+
+    private AlphaPatternDrawable mAlphaPattern;
+
     private void setAlphaPattern(Context context, int size) {
-        AlphaPatternDrawable apd = new AlphaPatternDrawable(context);
-        mAlphaPattern = apd.generatePatternBitmap(size, size);
-        setImageBitmap(mAlphaPattern);
+        mAlphaPattern = new AlphaPatternDrawable(context);
+        mAlphaPattern.generatePatternBitmap(size - 2, size - 2);
+        mCenterRectangle.set(new Rect(0, 0, size, size));
     }
 
     public void setColor(int color, int borderColor) {
-        mColor = color;
         mColorPaint = new Paint();
-        mColorPaint.setColor(mColor);
+        mColorPaint.setColor(color);
 
-        mBorderColor = borderColor;
         mBorderColorPaint = new Paint();
-        mBorderColorPaint.setColor(mBorderColor);
+        mBorderColorPaint.setColor(borderColor);
         mBorderColorPaint.setStrokeWidth(2f);
 
         invalidate();
@@ -123,6 +124,11 @@ public class ColorPickerPreferenceWidget extends ImageView {
         int x = 0;
         int y = 0;
 
+        if (mAlphaPattern != null) {
+            mAlphaPattern.setBounds(mCenterRectangle);
+            mAlphaPattern.draw(canvas);
+        }
+
         // draw color
         canvas.drawRect(x, y, mCurrentSize, mCurrentSize, mColorPaint);
 
@@ -133,48 +139,17 @@ public class ColorPickerPreferenceWidget extends ImageView {
         canvas.drawLine(x, y + mCurrentSize, x + mCurrentSize, y + mCurrentSize, mBorderColorPaint);
     }
 
-    static void setPreviewColor(View preferenceView, int color, boolean isEnabled) {
-        if (preferenceView != null && preferenceView instanceof ViewGroup) {
-            Context context = preferenceView.getContext();
-            ViewGroup widgetFrameView = ((ViewGroup) preferenceView.findViewById(android.R.id.widget_frame));
+    public void setPreviewColor(int color, boolean isEnabled) {
+        setTag(IMAGE_VIEW_TAG);
 
-            if (widgetFrameView != null) {
-
-                ColorPickerPreferenceWidget widgetView = null;
-
-                // find already created preview image
-                int count = widgetFrameView.getChildCount();
-                for (int i = 0; i < count; i++) {
-                    View view = widgetFrameView.getChildAt(i);
-                    if (view instanceof ColorPickerPreferenceWidget && IMAGE_VIEW_TAG.equals(view.getTag())) {
-                        widgetView = (ColorPickerPreferenceWidget) view;
-                        break;
-                    }
-                }
-                if (widgetView == null) {
-                    // remove already created preview image and create new one
-                    if (count > 0) widgetFrameView.removeViews(0, count);
-                    widgetView = new ColorPickerPreferenceWidget(context);
-                    widgetView.setTag(IMAGE_VIEW_TAG);
-                    widgetFrameView.setVisibility(View.VISIBLE);
-                    widgetFrameView.setPadding(
-                            widgetFrameView.getPaddingLeft(),
-                            widgetFrameView.getPaddingTop(),
-                            (int) (Util.getDisplayDensity(context) * 8),
-                            widgetFrameView.getPaddingBottom()
-                    );
-                    widgetFrameView.addView(widgetView);
-                }
-
-                // determine and set colors
-                int borderColor = Color.WHITE;
-                if (!isEnabled) {
-                    color = reduceBrightness(color, 1);
-                    borderColor = reduceBrightness(borderColor, 1);
-                }
-                widgetView.setColor(color, borderColor);
-            }
+        // determine and set colors
+        int borderColor = Color.WHITE;
+        if (!isEnabled) {
+            color = reduceBrightness(color, 1);
+            borderColor = reduceBrightness(borderColor, 1);
         }
+
+        setColor(color, borderColor);
     }
 
     private static int reduceBrightness(int color, int factor) {
