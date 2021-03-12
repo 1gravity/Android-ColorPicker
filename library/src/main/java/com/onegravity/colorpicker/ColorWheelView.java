@@ -46,6 +46,7 @@ import com.onegravity.utils.AlphaPatternDrawable;
  * Use {@link #addOpacityBar(OpacityBar)} to add a Opacity Bar.
  * </p>
  */
+@SuppressWarnings({"unused", "RedundantSuppression"})
 public class ColorWheelView extends View {
     /*
      * Constants used to save/restore the instance state.
@@ -117,20 +118,20 @@ public class ColorWheelView extends View {
     /**
      * The rectangle enclosing the color wheel.
      */
-    private RectF mColorWheelRectangle = new RectF();
+    private final RectF mColorWheelRectangle = new RectF();
 
     /**
      * The rectangle enclosing the center inside the color wheel.
      * Used for drawing the circles.
      */
-    private RectF mCenterRectangleF = new RectF();
+    private final RectF mCenterRectangleF = new RectF();
 
     /**
      * The rectangle enclosing the center inside the color wheel.
      * Used for drawing the alpha pattern (which is a rectangle with circular clipping).
      */
-    private Rect mCenterRectangle = new Rect();
-    private Path mCenterClipping = new Path();
+    private final Rect mCenterRectangle = new Rect();
+    private final Path mCenterClipping = new Path();
 
     /**
      * {@code true} if the user clicked on the pointer to start the move mode. <br>
@@ -213,7 +214,7 @@ public class ColorWheelView extends View {
      * An array of floats that can be build into a {@code Color} <br>
      * Where we can extract the Saturation and Value from.
      */
-    private float[] mHSV = new float[3];
+    private final float[] mHSV = new float[3];
 
     /**
      * {@code SVBar} instance used to control the Saturation/Value bar.
@@ -351,13 +352,11 @@ public class ColorWheelView extends View {
      * Currently it is always called when the color wheel has been released.
      */
     public interface OnColorSelectedListener {
-        public void onColorSelected(int color);
+        void onColorSelected(int color);
     }
 
     /**
      * Set a onColorChangedListener
-     *
-     * @param {@code OnColorChangedListener}
      */
     public void setOnColorChangedListener(OnColorChangedListener listener) {
         mOnColorChangedListener = listener;
@@ -374,8 +373,6 @@ public class ColorWheelView extends View {
 
     /**
      * Set a onColorSelectedListener
-     *
-     * @param {@code OnColorSelectedListener}
      */
     public void setOnColorSelectedListener(OnColorSelectedListener listener) {
         mOnColorSelectedListener = listener;

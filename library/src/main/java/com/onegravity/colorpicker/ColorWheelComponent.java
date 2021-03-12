@@ -23,11 +23,11 @@ import android.view.View;
 
 public class ColorWheelComponent {
 
-    private OnColorChangedListener mListener;
+    private final OnColorChangedListener mListener;
 
     final private int mInitialColor;
     final private boolean mUseOpacityBar;
-    private int mNewColor;
+    private final int mNewColor;
 
     private ColorWheelView mColorPicker;
 
@@ -42,19 +42,19 @@ public class ColorWheelComponent {
     View createView(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_color_wheel, null);
 
-        mColorPicker = (ColorWheelView) view.findViewById(R.id.picker);
+        mColorPicker = view.findViewById(R.id.picker);
 
-        ValueBar valueBar = (ValueBar) view.findViewById(R.id.valuebar);
+        ValueBar valueBar = view.findViewById(R.id.valuebar);
         if (valueBar != null) {
             mColorPicker.addValueBar(valueBar);
         }
 
-        SaturationBar saturationBar = (SaturationBar) view.findViewById(R.id.saturationbar);
+        SaturationBar saturationBar = view.findViewById(R.id.saturationbar);
         if (saturationBar != null) {
             mColorPicker.addSaturationBar(saturationBar);
         }
 
-        OpacityBar opacityBar = (OpacityBar) view.findViewById(R.id.opacitybar);
+        OpacityBar opacityBar = view.findViewById(R.id.opacitybar);
         if (opacityBar != null) {
             if (mUseOpacityBar) {
                 mColorPicker.addOpacityBar(opacityBar);

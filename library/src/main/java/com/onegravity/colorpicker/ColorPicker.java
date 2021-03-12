@@ -35,6 +35,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+@SuppressWarnings({"unused", "RedundantSuppression"})
 public class ColorPicker implements OnColorChangedListener, OnTabChangeListener {
 
     private static final String WHEEL_TAG = "wheel";
@@ -178,17 +179,16 @@ public class ColorPicker implements OnColorChangedListener, OnTabChangeListener 
 
    // ****************************************** Tab Methods *******************************************
 
-    private TabHost mTabHost;
     private String mCurrentTab;
 
     private void initTabs(View rootLayout) {
         /*
          * Create tabs
          */
-        mTabHost = (TabHost) rootLayout.findViewById(android.R.id.tabhost);
-        mTabHost.setup();
-        mTabHost.clearAllTabs();
-        mTabHost.setOnTabChangedListener(null);        // or we would get NPEs in onTabChanged() when calling addTab()
+        TabHost tabHost = rootLayout.findViewById(android.R.id.tabhost);
+        tabHost.setup();
+        tabHost.clearAllTabs();
+        tabHost.setOnTabChangedListener(null);        // or we would get NPEs in onTabChanged() when calling addTab()
 
         // TabContentFactory
         TabContentFactory tabFactory = new TabContentFactory() {
@@ -207,20 +207,20 @@ public class ColorPicker implements OnColorChangedListener, OnTabChangeListener 
         };
 
         // color wheel
-        TabSpec tabSpec1 = mTabHost.newTabSpec(WHEEL_TAG)
+        TabSpec tabSpec1 = tabHost.newTabSpec(WHEEL_TAG)
                 .setIndicator(mContext.getString(R.string.color_picker_wheel))
                 .setContent(tabFactory);
-        mTabHost.addTab(tabSpec1);
+        tabHost.addTab(tabSpec1);
 
         // ARGB input field
-        TabSpec tabSpec2 = mTabHost.newTabSpec(EXACT_TAG)
+        TabSpec tabSpec2 = tabHost.newTabSpec(EXACT_TAG)
                 .setIndicator(mContext.getString(R.string.color_picker_exact))
                 .setContent(tabFactory);
-        mTabHost.addTab(tabSpec2);
+        tabHost.addTab(tabSpec2);
 
-        mTabHost.setOnTabChangedListener(this);
+        tabHost.setOnTabChangedListener(this);
         String tag = mCurrentTab != null ? mCurrentTab : WHEEL_TAG;
-        mTabHost.setCurrentTabByTag(tag);
+        tabHost.setCurrentTabByTag(tag);
     }
 
     @Override

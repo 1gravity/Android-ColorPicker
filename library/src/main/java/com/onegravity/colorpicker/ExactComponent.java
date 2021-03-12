@@ -28,7 +28,7 @@ import android.widget.EditText;
 
 public class ExactComponent {
 
-    private OnColorChangedListener mListener;
+    private final OnColorChangedListener mListener;
 
     private EditText mExactViewA;
     private EditText mExactViewR;
@@ -53,10 +53,10 @@ public class ExactComponent {
     View createView(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_color_exact, null);
 
-        mExactViewA = (EditText) view.findViewById(R.id.exactA);
-        mExactViewR = (EditText) view.findViewById(R.id.exactR);
-        mExactViewG = (EditText) view.findViewById(R.id.exactG);
-        mExactViewB = (EditText) view.findViewById(R.id.exactB);
+        mExactViewA = view.findViewById(R.id.exactA);
+        mExactViewR = view.findViewById(R.id.exactR);
+        mExactViewG = view.findViewById(R.id.exactG);
+        mExactViewB = view.findViewById(R.id.exactB);
 
         InputFilter[] filters = new InputFilter[]{new InputFilter.LengthFilter(2)};
         mExactViewA.setFilters(filters);
@@ -73,7 +73,7 @@ public class ExactComponent {
         mExactViewG.addTextChangedListener(mExactTextWatcher);
         mExactViewB.addTextChangedListener(mExactTextWatcher);
 
-        mExactColorPicker = (ColorWheelView) view.findViewById(R.id.picker_exact);
+        mExactColorPicker = view.findViewById(R.id.picker_exact);
         mExactColorPicker.setOldCenterColor(mInitialColor);
         mExactColorPicker.setNewCenterColor(mNewColor);
 
@@ -108,7 +108,7 @@ public class ExactComponent {
         mTextIgnoreChanges = false;
     }
 
-    private TextWatcher mExactTextWatcher = new TextWatcher() {
+    private final TextWatcher mExactTextWatcher = new TextWatcher() {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
         public void onTextChanged(CharSequence s, int start, int before, int count) {}
         public void afterTextChanged(Editable s) {

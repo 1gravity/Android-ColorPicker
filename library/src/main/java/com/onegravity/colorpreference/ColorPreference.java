@@ -12,8 +12,8 @@ import com.onegravity.colorpicker.R;
 public class ColorPreference extends Preference implements ColorDialog.OnColorSelectedListener {
     private int[] colorChoices = {};
     private int value = 0;
-    private int itemLayoutId = R.layout.pref_color_layout;
-    private int itemLayoutLargeId = R.layout.pref_color_layout_large;
+    private final int itemLayoutId = R.layout.pref_color_layout;
+    private final int itemLayoutLargeId = R.layout.pref_color_layout_large;
     private int numColumns = 5;
     private ColorShape colorShape = ColorShape.CIRCLE;
     private boolean showDialog = true;

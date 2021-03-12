@@ -25,7 +25,7 @@ import com.onegravity.colorpicker.ColorPickerListener;
 /**
  * A preference type that allows a user to choose a color
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "RedundantSuppression"})
 public class ColorPickerPreference extends ColorPreferenceCompat implements ColorPickerListener {
 
     public ColorPickerPreference(Context context) {
@@ -40,16 +40,12 @@ public class ColorPickerPreference extends ColorPreferenceCompat implements Colo
         super(context, attrs, defStyle);
     }
 
-    private ColorPicker mPicker;
-    private int mPickerId;
-
-    private boolean mAlphaSliderEnabled = true;
-
     @Override
     protected void onClick() {
-        mPicker = new ColorPicker(getContext(), getValue(), mAlphaSliderEnabled);
-        mPickerId = mPicker.show();
-        ColorPicker.setListener(mPickerId, this);
+        boolean mAlphaSliderEnabled = true;
+        ColorPicker picker = new ColorPicker(getContext(), getValue(), mAlphaSliderEnabled);
+        int pickerId = picker.show();
+        ColorPicker.setListener(pickerId, this);
     }
 
     @Override

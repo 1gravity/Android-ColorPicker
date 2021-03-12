@@ -32,6 +32,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+@SuppressWarnings({"unused", "RedundantSuppression"})
 public class ValueBar extends View {
 
     /*
@@ -155,7 +156,7 @@ public class ValueBar extends View {
     private int oldChangedListenerValue;
 
     public interface OnValueChangedListener {
-        public void onValueChanged(int value);
+        void onValueChanged(int value);
     }
 
     public void setOnValueChangedListener(OnValueChangedListener listener) {
@@ -329,8 +330,6 @@ public class ValueBar extends View {
         canvas.drawCircle(cX, cY, mBarPointerRadius, mBarPointerPaint);
     }
 
-    ;
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -409,8 +408,6 @@ public class ValueBar extends View {
      * Set the bar color. <br>
      * <br>
      * Its discouraged to use this method.
-     *
-     * @param color
      */
     public void setColor(int color) {
         int x1, y1;
@@ -469,7 +466,7 @@ public class ValueBar extends View {
         }
         mColor = Color.HSVToColor(new float[]{mHSVColor[0],
                 mHSVColor[1],
-                (float) (1 - (mPosToSatFactor * coord))});
+            1 - (mPosToSatFactor * coord)});
     }
 
     /**
@@ -487,7 +484,6 @@ public class ValueBar extends View {
      * WARNING: Don't change the color picker. it is done already when the bar
      * is added to the ColorPicker
      *
-     * @param picker
      * @see ColorWheelView#addSVBar(SVBar)
      */
     public void setColorPicker(ColorWheelView picker) {
