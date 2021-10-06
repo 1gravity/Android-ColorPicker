@@ -28,19 +28,8 @@ Setup
 Add this to your Gradle build file:
 ```
 dependencies {
-    compile 'com.1gravity:android-colorpicker:2.1.0'
+    compile 'com.1gravity:android-colorpicker:2.2.1'
 }
-```
-
-#### **Proguard**
-
-If you use Proguard in your app, please add the following lines to your configuration file:
-```
--keepattributes *Annotation*
--keepclassmembers class ** {
-    @org.greenrobot.eventbus.Subscribe <methods>;
-}
--keep enum org.greenrobot.eventbus.ThreadMode { *; }
 ```
 
 ####**Theming**
@@ -95,7 +84,7 @@ If you have an issues with this library, please open a issue here: https://githu
 License
 -------
 
-Copyright 2016 Emanuel Moecklin
+Copyright 2021 Emanuel Moecklin
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
