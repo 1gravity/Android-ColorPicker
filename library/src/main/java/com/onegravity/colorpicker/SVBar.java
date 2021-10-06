@@ -98,7 +98,7 @@ public class SVBar extends View {
     /**
      * The rectangle enclosing the bar.
      */
-    private RectF mBarRect = new RectF();
+    private final RectF mBarRect = new RectF();
 
     /**
      * {@code Shader} instance used to fill the shader of the paint.
@@ -122,7 +122,7 @@ public class SVBar extends View {
      * An array of floats that can be build into a {@code Color} <br>
      * Where we can extract the Saturation and Value from.
      */
-    private float[] mHSVColor = new float[3];
+    private final float[] mHSVColor = new float[3];
 
     /**
      * Factor used to calculate the position to the Saturation/Value on the bar.
@@ -471,11 +471,11 @@ public class SVBar extends View {
                     .HSVToColor(new float[]{
                             mHSVColor[0],
                             1f,
-                            (float) (1 - (mPosToSVFactor * (coord - (mBarPointerHaloRadius + (mBarLength / 2)))))});
+                        1 - (mPosToSVFactor * (coord - (mBarPointerHaloRadius + (mBarLength / 2))))});
         } else if (coord > mBarPointerHaloRadius
                 && coord < (mBarPointerHaloRadius + mBarLength)) {
             mColor = Color.HSVToColor(new float[]{mHSVColor[0],
-                    (float) ((mPosToSVFactor * (coord - mBarPointerHaloRadius))),
+                (mPosToSVFactor * (coord - mBarPointerHaloRadius)),
                     1f});
         } else if (coord == mBarPointerHaloRadius) {
             mColor = Color.WHITE;
@@ -499,7 +499,6 @@ public class SVBar extends View {
      * WARNING: Don't change the color picker. it is done already when the bar
      * is added to the ColorPicker
      *
-     * @param picker
      * @see ColorWheelView#addSVBar(SVBar)
      */
     public void setColorPicker(ColorWheelView picker) {

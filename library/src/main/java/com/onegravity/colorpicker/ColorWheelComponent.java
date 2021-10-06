@@ -23,11 +23,11 @@ import android.view.View;
 
 public class ColorWheelComponent {
 
-    private OnColorChangedListener mListener;
+    private final OnColorChangedListener mListener;
 
     final private int mInitialColor;
     final private boolean mUseOpacityBar;
-    private int mNewColor;
+    private final int mNewColor;
 
     private ColorWheelView mColorPicker;
 

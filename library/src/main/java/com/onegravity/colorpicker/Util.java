@@ -46,7 +46,7 @@ public class Util {
     }
 
     public static Bitmap allocateBitmap(int width, int height) {
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         try {
             bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         } catch (Throwable e1) {
@@ -75,8 +75,6 @@ public class Util {
 
     /**
      * Concerts a String color (#ff882465) to an int color
-     *
-     * @throws NumberFormatException
      */
     public static int convertToColorInt(String a, String r, String g, String b, boolean useAlpha) throws NumberFormatException {
         int alpha = useAlpha ? Integer.parseInt(a, 16) : 0xff;

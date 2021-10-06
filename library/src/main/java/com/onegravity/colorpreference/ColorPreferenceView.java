@@ -46,20 +46,20 @@ public class ColorPreferenceView extends AppCompatImageView {
 
     public ColorPreferenceView(Context context) {
         super(context);
-        init(context, null);
+        init(context);
     }
 
     public ColorPreferenceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
+        init(context);
     }
 
     public ColorPreferenceView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(context, attrs);
+        init(context);
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    private void init(Context context) {
         setTag(IMAGE_VIEW_TAG);
         setBackgroundColor(Color.TRANSPARENT);
 
@@ -72,7 +72,7 @@ public class ColorPreferenceView extends AppCompatImageView {
         setLayoutParams(new ViewGroup.LayoutParams(wrap, wrap));
     }
 
-    private Rect mCenterRectangle = new Rect();
+    private final Rect mCenterRectangle = new Rect();
 
     private AlphaPatternDrawable mAlphaPattern;
 
