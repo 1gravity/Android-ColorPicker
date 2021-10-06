@@ -23,7 +23,7 @@ The color picker allows to:
 
 Setup
 -----
-####**Dependencies**
+#### Dependencies
 
 Add this to your Gradle build file:
 ```
@@ -32,11 +32,11 @@ dependencies {
 }
 ```
 
-####**Theming**
+#### Theming
 
 Simply use one of the AppCompat themes (Theme.AppCompat, Theme.AppCompat.Light or one of its derivatives).
 
-#### **Use as Preference**
+#### Use as Preference
 To use the color picker as a preference add this to your preferences file:
 ```
 <com.onegravity.colorpreference.ColorPickerPreference
@@ -49,7 +49,7 @@ To use the color picker as a preference add this to your preferences file:
 The alphaSlider attribute can be used to show/hide the slider for the alpha slider (opacity).
 The (A)RGB input field will reflect this attribute as well (allow/disallow entering an alpha value). 
 
-#### **Use as Dialog**
+#### Use as Dialog
 To use the color picker as a dialog call:
 ```
 int dialogId = new ColorPickerDialog(this, initialColor, true).show();
