@@ -14,17 +14,13 @@
  * limitations under the License.
  */
 
-package com.onegravity.colorpicker;
+import org.gradle.kotlin.dsl.`kotlin-dsl`
 
-public interface ColorPickerListener extends OnColorChangedListener {
+plugins {
+    `kotlin-dsl`
+}
 
-    /**
-     * This method is called if the color picker dialog is closing.
-     *
-     * The color picker makes sure to call the onColorChanged before calling this to communicate
-     * the last needed color change (reset to the initial color if the user selected cancel, set the
-     * last picked color if the user selected ok).
-     */
-    void onDialogClosing();
-
+repositories {
+    google()
+    mavenCentral()
 }

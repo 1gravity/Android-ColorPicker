@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Emanuel Moecklin
+ * Copyright (C) 2015-2021 Emanuel Moecklin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.onegravity.colorpicker.ColorPicker;
@@ -53,9 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // configure background color and set listener
         mRootLayout = findViewById(R.id.root_layout);
         mRootLayout.setBackgroundColor(mBackgroundColor);
-        if (mDialogId != -1) {
-            ColorPicker.setListener(mDialogId, this);
-        }
 
         // configure color settings
         mColorSetting1 = findViewById(R.id.color_setting_1);
@@ -70,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putInt("mDialogId", mDialogId);
@@ -85,8 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (id == R.id.pick_color) {
             if (mDialogId == -1) {
                 // the dialog will stay open so don't open it again after an orientation change
-                mDialogId = new ColorPicker(this, mBackgroundColor, true).show();
-                ColorPicker.setListener(mDialogId, this);
+                mDialogId = new ColorPicker(this, mBackgroundColor, true, this).show();
             }
         }
 
@@ -100,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // return from the settings screen
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             configureSettingColors();
         }

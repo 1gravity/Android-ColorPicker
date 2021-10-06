@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Emanuel Moecklin
+ * Copyright (C) 2015-2021 Emanuel Moecklin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,36 +14,39 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
+plugins {
+    id("com.android.library")
+}
 
 android {
-    compileSdkVersion 30
+    compileSdk = Build.compileSdkVersion
+    buildToolsVersion = Build.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 30
+        minSdk = Build.minSdkVersion
+        targetSdk = Build.targetSdkVersion
     }
 
     buildTypes {
-        release {
-            debuggable false
-            minifyEnabled false
+        getByName("release") {
+            isMinifyEnabled = false
         }
     }
 
-    lintOptions {
-        abortOnError false
+    lint {
+        isAbortOnError = true
+        disable("UnusedResources")
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
-    api "org.greenrobot:eventbus:3.1.1"
-
-    api "androidx.preference:preference:1.0.0"
+    api("androidx.preference:preference:1.1.1")
 
     // used for the material design (dialogs and tab layout)
-    api "androidx.appcompat:appcompat:1.2.0"
+    api("androidx.appcompat:appcompat:1.3.1")
 }
-
-apply from: '../android-artifacts.gradle'
-apply from: '../central-publish.gradle'

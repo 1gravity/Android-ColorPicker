@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Emanuel Moecklin
+ * Copyright (C) 2015-2021 Emanuel Moecklin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,19 +42,19 @@ public class ColorWheelComponent {
     View createView(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_color_wheel, null);
 
-        mColorPicker = (ColorWheelView) view.findViewById(R.id.picker);
+        mColorPicker = view.findViewById(R.id.picker);
 
-        ValueBar valueBar = (ValueBar) view.findViewById(R.id.valuebar);
+        ValueBar valueBar = view.findViewById(R.id.valuebar);
         if (valueBar != null) {
             mColorPicker.addValueBar(valueBar);
         }
 
-        SaturationBar saturationBar = (SaturationBar) view.findViewById(R.id.saturationbar);
+        SaturationBar saturationBar = view.findViewById(R.id.saturationbar);
         if (saturationBar != null) {
             mColorPicker.addSaturationBar(saturationBar);
         }
 
-        OpacityBar opacityBar = (OpacityBar) view.findViewById(R.id.opacitybar);
+        OpacityBar opacityBar = view.findViewById(R.id.opacitybar);
         if (opacityBar != null) {
             if (mUseOpacityBar) {
                 mColorPicker.addOpacityBar(opacityBar);
@@ -69,11 +69,11 @@ public class ColorWheelComponent {
         return view;
     }
 
-    void activate(Context context, int newColor) {
+    void activate(int newColor) {
         mColorPicker.setColor(newColor);
     }
 
-    void deactivate(Context context) {
+    void deactivate() {
         // do nothing
     }
 

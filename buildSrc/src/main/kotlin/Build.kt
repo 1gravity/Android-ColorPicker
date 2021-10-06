@@ -14,21 +14,10 @@
  * limitations under the License.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
-buildscript {
-    repositories {
-        jcenter()
-        google()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2'
-    }
-}
-
-allprojects {
-    repositories {
-        jcenter()
-        google()
-    }
+object Build {
+    const val buildToolsVersion = "31.0.0"
+    const val compileSdkVersion = 30
+    const val minSdkVersion = 16
+    const val targetSdkVersion = 30
+    const val versionName = "1.6.8"
 }

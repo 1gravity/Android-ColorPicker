@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Emanuel Moecklin
+ * Copyright (C) 2015-2021 Emanuel Moecklin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,10 +31,6 @@ import android.widget.TabHost.TabSpec;
 
 import androidx.appcompat.app.AlertDialog;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 public class ColorPicker implements OnColorChangedListener, OnTabChangeListener {
 
     private static final String WHEEL_TAG = "wheel";
@@ -54,11 +50,7 @@ public class ColorPicker implements OnColorChangedListener, OnTabChangeListener 
 
     private Dialog mDialog;
 
-    private ColorPickerListener mListener;
-
-    private int mOrientation;
-
-    private View mRootLayout;
+    private final ColorPickerListener mListener;
 
     private ColorWheelComponent mColorWheelComponent;
     private ExactComponent mExactComponent;
@@ -70,39 +62,27 @@ public class ColorPicker implements OnColorChangedListener, OnTabChangeListener 
      *                     used if the user re-sets the color or cancels the dialog.
      * @param useOpacityBar True if the user should be able to change the opacity / alpha channel.
      */
-    public ColorPicker(Context context, int initialColor, boolean useOpacityBar) {
+    public ColorPicker(Context context, int initialColor, boolean useOpacityBar, ColorPickerListener listener) {
         mId = sCount++;
         mContext = context;
         mInitialColor = initialColor;
         mNewColor = initialColor;
         mUseOpacityBar = useOpacityBar;
-    }
-
-    /**
-     * Call this to register an ColorPickerListenerEvent with a certain dialog
-     *
-     * @param dialogId This identifies the dialog. It's the id returned by the ColorPicker.show() method.
-     * @param listener The listener to register.
-     */
-    static public void setListener(int dialogId, ColorPickerListener listener) {
-        ColorPickerListenerEvent event = new ColorPickerListenerEvent(dialogId, listener);
-        EventBus.getDefault().post(event);
+        mListener = listener;
     }
 
     @SuppressLint("InflateParams")
     public int show() {
-        mOrientation = Util.getScreenOrientation(mContext);
-
-        mRootLayout = LayoutInflater.from(mContext).inflate(R.layout.dialog_color_picker, null);
+        View rootLayout = LayoutInflater.from(mContext).inflate(R.layout.dialog_color_picker, null);
 
         // init tabs
-        initTabs(mRootLayout);
+        initTabs(rootLayout);
 
         /*
          * Create Dialog
          */
         mDialog = new AlertDialog.Builder(mContext)
-                .setView(mRootLayout)
+                .setView(rootLayout)
                 .setCancelable(true)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
@@ -131,8 +111,6 @@ public class ColorPicker implements OnColorChangedListener, OnTabChangeListener 
         // otherwise the keyboard won't show
         mDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
 
-        EventBus.getDefault().register(this);
-
         return mId;
     }
 
@@ -141,27 +119,10 @@ public class ColorPicker implements OnColorChangedListener, OnTabChangeListener 
             mListener.onColorChanged(color);
             mListener.onDialogClosing();
         }
-        EventBus.getDefault().unregister(this);
     }
 
     public void dismiss() {
         try { mDialog.dismiss(); } catch (Exception ignore) {}
-    }
-
-    /**
-     * Set a OnColorChangedListener to get notified when the color selected by the user has changed.
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(ColorPickerListenerEvent event) {
-        if (event.getId() == mId) {
-            int screenOrientation = Util.getScreenOrientation(mContext);
-            if (mOrientation != screenOrientation) {
-                mOrientation = screenOrientation;
-                initTabs(mRootLayout);
-            }
-
-            mListener = event.getListener();
-        }
     }
 
     @Override
@@ -178,17 +139,16 @@ public class ColorPicker implements OnColorChangedListener, OnTabChangeListener 
 
    // ****************************************** Tab Methods *******************************************
 
-    private TabHost mTabHost;
     private String mCurrentTab;
 
     private void initTabs(View rootLayout) {
         /*
          * Create tabs
          */
-        mTabHost = (TabHost) rootLayout.findViewById(android.R.id.tabhost);
-        mTabHost.setup();
-        mTabHost.clearAllTabs();
-        mTabHost.setOnTabChangedListener(null);        // or we would get NPEs in onTabChanged() when calling addTab()
+        TabHost tabHost = rootLayout.findViewById(android.R.id.tabhost);
+        tabHost.setup();
+        tabHost.clearAllTabs();
+        tabHost.setOnTabChangedListener(null);        // or we would get NPEs in onTabChanged() when calling addTab()
 
         // TabContentFactory
         TabContentFactory tabFactory = new TabContentFactory() {
@@ -207,20 +167,20 @@ public class ColorPicker implements OnColorChangedListener, OnTabChangeListener 
         };
 
         // color wheel
-        TabSpec tabSpec1 = mTabHost.newTabSpec(WHEEL_TAG)
+        TabSpec tabSpec1 = tabHost.newTabSpec(WHEEL_TAG)
                 .setIndicator(mContext.getString(R.string.color_picker_wheel))
                 .setContent(tabFactory);
-        mTabHost.addTab(tabSpec1);
+        tabHost.addTab(tabSpec1);
 
         // ARGB input field
-        TabSpec tabSpec2 = mTabHost.newTabSpec(EXACT_TAG)
+        TabSpec tabSpec2 = tabHost.newTabSpec(EXACT_TAG)
                 .setIndicator(mContext.getString(R.string.color_picker_exact))
                 .setContent(tabFactory);
-        mTabHost.addTab(tabSpec2);
+        tabHost.addTab(tabSpec2);
 
-        mTabHost.setOnTabChangedListener(this);
+        tabHost.setOnTabChangedListener(this);
         String tag = mCurrentTab != null ? mCurrentTab : WHEEL_TAG;
-        mTabHost.setCurrentTabByTag(tag);
+        tabHost.setCurrentTabByTag(tag);
     }
 
     @Override
@@ -228,10 +188,10 @@ public class ColorPicker implements OnColorChangedListener, OnTabChangeListener 
         mCurrentTab = tabId;
         if (tabId.equals(WHEEL_TAG) && mColorWheelComponent != null) {
             mExactComponent.deactivate(mContext);
-            mColorWheelComponent.activate(mContext, mNewColor);
+            mColorWheelComponent.activate(mNewColor);
         }
         else if (tabId.equals(EXACT_TAG) && mExactComponent != null) {
-            mColorWheelComponent.deactivate(mContext);
+            mColorWheelComponent.deactivate();
             mExactComponent.activate(mContext, mNewColor);
         }
     }

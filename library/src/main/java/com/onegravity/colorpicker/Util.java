@@ -84,7 +84,7 @@ public class Util {
         int green = Integer.parseInt(g, 16);
         int blue = Integer.parseInt(b, 16);
 
-        return Color.argb(useAlpha ? alpha : -1, red, green, blue);
+        return Color.argb(useAlpha ? alpha : 0, red, green, blue);
     }
 
     /**
@@ -98,7 +98,7 @@ public class Util {
             argb = argb.replace("#", "");
         }
 
-        int alpha = -1, red = -1, green = -1, blue = -1;
+        int alpha = 0xFF, red = 0xFF, green = 0xFF, blue = 0xFF;
 
         if (argb.length() == 8) {
             alpha = Integer.parseInt(argb.substring(0, 2), 16);
@@ -112,7 +112,7 @@ public class Util {
             blue = Integer.parseInt(argb.substring(4, 6), 16);
         }
 
-        return Color.argb(useAlpha ? alpha : -1, red, green, blue);
+        return Color.argb(useAlpha ? alpha : 0, red, green, blue);
     }
 
 }

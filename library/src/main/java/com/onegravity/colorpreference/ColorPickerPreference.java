@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Emanuel Moecklin
+ * Copyright (C) 2015-2021 Emanuel Moecklin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@ import com.onegravity.colorpicker.ColorPickerListener;
 /**
  * A preference type that allows a user to choose a color
  */
-@SuppressWarnings("unused")
 public class ColorPickerPreference extends ColorPreferenceCompat implements ColorPickerListener {
 
     public ColorPickerPreference(Context context) {
@@ -40,16 +39,9 @@ public class ColorPickerPreference extends ColorPreferenceCompat implements Colo
         super(context, attrs, defStyle);
     }
 
-    private ColorPicker mPicker;
-    private int mPickerId;
-
-    private boolean mAlphaSliderEnabled = true;
-
     @Override
     protected void onClick() {
-        mPicker = new ColorPicker(getContext(), getValue(), mAlphaSliderEnabled);
-        mPickerId = mPicker.show();
-        ColorPicker.setListener(mPickerId, this);
+        new ColorPicker(getContext(), getValue(), true, this).show();
     }
 
     @Override
