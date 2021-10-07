@@ -53,78 +53,45 @@ dependencies {
     api("androidx.appcompat:appcompat:1.3.1")
 }
 
-val props = project.properties
+val sourceFiles = android.sourceSets.getByName("main").java.getSourceFiles()
 
-fun isReleaseBuild() = props["POM_VERSION_NAME"]?.toString()?.contains("SNAPSHOT") == false
+tasks.register<Javadoc>("withJavadoc") {
+    isFailOnError = false
+    dependsOn(tasks.named("compileDebugSources"), tasks.named("compileReleaseSources"))
 
-fun getRepositoryUrl() = if (isReleaseBuild()) getReleaseRepositoryUrl() else getSnapshotRepositoryUrl()
+    // add Android runtime classpath
+    android.bootClasspath.forEach { classpath += project.fileTree(it) }
 
-fun getReleaseRepositoryUrl() = props["RELEASE_REPOSITORY_URL"]?.toString()
-    ?: "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+    // add classpath for all dependencies
+    android.libraryVariants.forEach { variant ->
+        variant.javaCompileProvider.get().classpath.files.forEach { file ->
+            classpath += project.fileTree(file)
+        }
+    }
 
-fun getSnapshotRepositoryUrl() = props["SNAPSHOT_REPOSITORY_URL"]?.toString()
-    ?: "https://oss.sonatype.org/content/repositories/snapshots/"
+    source = sourceFiles
+}
+
+val withJavadocJar = tasks.register<Jar>("withJavadocJar") {
+    archiveClassifier.set("javadoc")
+    dependsOn(tasks.named("withJavadoc"))
+    val destination = tasks.named<Javadoc>("withJavadoc").get().destinationDir
+    from(destination)
+}
+
+val withSourcesJar = tasks.register<Jar>("withSourcesJar") {
+    archiveClassifier.set("sources")
+    from(sourceFiles)
+}
 
 afterEvaluate {
     publishing {
-        repositories {
-            maven {
-                url = uri(getRepositoryUrl())
-                // credentials are stored in ~/.gradle/gradle.properties with ~ being the path of the home directory
-                credentials {
-                    username = props["NEXUS_USERNAME"]?.toString()
-                        ?: throw IllegalStateException("user/NEXUS_USERNAME name not found")
-                    password = props["NEXUS_PASSWORD"]?.toString()
-                        ?: throw IllegalStateException("password/NEXUS_PASSWORD not found")
-                }
-            }
-        }
-
-        val publicationName = props["PUBLICATION_NAME"]?.toString() ?: "MavenLibrary"
-
+        repositories(project)
         publications {
+            val publicationName = project.properties["POM_NAME"]?.toString() ?: "publication"
             create<MavenPublication>(publicationName) {
-                groupId = props["POM_GROUP_ID"].toString()
-                artifactId = props["POM_ARTIFACT_ID"].toString()
-                version = props["POM_VERSION_NAME"].toString()
-
-                from(components["release"])
-
-                pom {
-                    name.set(props["POM_NAME"].toString())
-                    description.set(props["POM_DESCRIPTION"].toString())
-                    url.set(props["POM_URL"].toString())
-                    packaging = props["POM_PACKAGING"].toString()
-
-                    scm {
-                        url.set(props["POM_SCM_URL"].toString())
-                        connection.set(props["POM_SCM_CONNECTION"].toString())
-                        developerConnection.set(props["POM_SCM_DEV_CONNECTION"].toString())
-                    }
-
-                    organization {
-                        name.set(props["POM_COMPANY_NAME"].toString())
-                        url.set(props["POM_COMPANY_URL"].toString())
-                    }
-
-                    developers {
-                        developer {
-                            id.set(props["POM_DEVELOPER_ID"].toString())
-                            name.set(props["POM_DEVELOPER_NAME"].toString())
-                            email.set(props["POM_DEVELOPER_EMAIL"].toString())
-                        }
-                    }
-
-                    licenses {
-                        license {
-                            name.set(props["POM_LICENCE_NAME"].toString())
-                            url.set(props["POM_LICENCE_URL"].toString())
-                            distribution.set(props["POM_LICENCE_DIST"].toString())
-                        }
-                    }
-                }
+                configure(project, withJavadocJar, withSourcesJar)
             }
-
             signing {
                 sign(publishing.publications.getByName(publicationName))
             }
