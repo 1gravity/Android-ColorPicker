@@ -116,7 +116,7 @@ afterEvaluate {
         publications {
             val props = project.properties
 
-            props.forEach {
+            props.toSortedMap().forEach {
                 println("${it.key} -> ${it.value}")
             }
             // 1. configure repositories
