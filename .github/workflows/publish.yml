@@ -39,4 +39,3 @@ jobs:
           password:${{ secrets.SIGNING_PASSWORD }}
           secretKeyRingFile:${{ secrets.SIGNING_KEY }}
         SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
-          
