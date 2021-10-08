@@ -58,7 +58,10 @@ tasks {
 
     register<Javadoc>("withJavadoc") {
         isFailOnError = false
+
+        // the code needs to be compiled before we can create the Javadoc
         dependsOn(android.libraryVariants.toList().last().javaCompileProvider)
+
         if (! project.plugins.hasPlugin("org.jetbrains.kotlin.android")) {
             setSource(sourceFiles)
         }
@@ -128,15 +131,15 @@ afterEvaluate {
             // 2. configure publication
             val publicationName = props["POM_NAME"]?.toString() ?: "publication"
             create<MavenPublication>(publicationName) {
-                groupId = props["POM_GROUP_ID"].toString()
-                artifactId = props["POM_ARTIFACT_ID"].toString()
-                version = props["POM_VERSION_NAME"].toString()
-
                 from(project.components["release"])
                 artifact(tasks.named<Jar>("withJavadocJar"))
                 artifact(tasks.named<Jar>("withSourcesJar"))
 
                 pom {
+                    groupId = props["POM_GROUP_ID"].toString()
+                    artifactId = props["POM_ARTIFACT_ID"].toString()
+                    version = props["POM_VERSION_NAME"].toString()
+
                     name.set(props["POM_NAME"].toString())
                     description.set(props["POM_DESCRIPTION"].toString())
                     url.set(props["POM_URL"].toString())
