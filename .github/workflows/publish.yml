@@ -35,7 +35,11 @@ jobs:
     - name: Publish to MavenCentral
       run: "./gradlew publish --max-workers 1
             -Poss.username=${{ secrets.OSSRH_USERNAME }}
-            -Poss.password=${{ secrets.OSSRH_PASSWORD }}"
+            -Poss.password=${{ secrets.OSSRH_PASSWORD }}
+            -PsigningInMemoryKeyId=${{ secrets.SIGNINGINMEMORYKEYID }}
+            -PsigningInMemoryKeyPassword=${{ secrets.SIGNINGINMEMORYKEYPASSWORD }}
+            -signingInMemoryKey=${{ secrets.SIGNINGINMEMORYKEY }}
+            "
       env:
         signingInMemoryKeyId: ${{ secrets.SIGNINGINMEMORYKEYID }}
         signingInMemoryKeyPassword: ${{ secrets.SIGNINGINMEMORYKEYPASSWORD }}
