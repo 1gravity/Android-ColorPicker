@@ -33,6 +33,6 @@ jobs:
 
     # Runs upload, and then closes & releases the repository
     - name: Publish to MavenCentral
-      run: "./gradlew publishReleasePublicationToSonatypeRepository --max-workers 1 closeAndReleaseSonatypeStagingRepository
+      run: "./gradlew publish --max-workers 1 closeAndReleaseSonatypeStagingRepository
             -Poss.username=${{ secrets.OSSRH_USERNAME }}
             -Poss.password=${{ secrets.OSSRH_PASSWORD }}"
