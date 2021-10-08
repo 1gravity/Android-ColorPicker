@@ -176,6 +176,12 @@ afterEvaluate {
 
             // 3. sign the artifacts
             signing {
+                // verify we have the signing configuration
+                props["signingInMemoryKey"]?.toString() ?: throw IllegalStateException("signingInMemoryKey not found")
+                props["signingInMemoryKeyId"]?.toString() ?: throw IllegalStateException("signingInMemoryKeyId not found")
+                props["signingInMemoryKeyPassword"]?.toString() ?: throw IllegalStateException("signingInMemoryKeyPassword")
+
+                // now sign the artifacts
                 sign(publishing.publications.getByName(publicationName))
             }
         }
