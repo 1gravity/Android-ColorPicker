@@ -116,6 +116,15 @@ afterEvaluate {
         publications {
             val props = project.properties
 
+            ext["test"] = "Emanuel"
+            ext["oss.username"] = System.getenv("OSSRH_USERNAME")
+            ext["oss.password"] = System.getenv("OSSRH_USERNAME")
+//            ext["sonatypeStagingProfileId"] = System.getenv('SONATYPE_STAGING_PROFILE_ID')
+//            ext["signing.keyId"] = System.getenv('SIGNING_KEY_ID')
+//            ext["signing.password"] = System.getenv('SIGNING_PASSWORD')
+//            ext["signing.key"] = System.getenv('SIGNING_KEY')
+
+
             props.toSortedMap().forEach {
                 println("${it.key} -> ${it.value}")
             }

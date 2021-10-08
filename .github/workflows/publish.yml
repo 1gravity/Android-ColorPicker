@@ -25,8 +25,7 @@ jobs:
             -Poss.username=${{ secrets.OSSRH_USERNAME }}
             -Poss.password=${{ secrets.OSSRH_PASSWORD }}
             -Psigning.keyId=${{ secrets.SIGNING_KEY_ID }}
-            -Psigning.password=${{ secrets.SIGNING_PASSWORD }}
-            -PsigningsecretKeyRingFile=${{ secrets.SIGNING_KEY }}"
+            -Psigning.password=${{ secrets.SIGNING_PASSWORD }}"
 
     # Generates source and Javadoc jar artifacts
     - name: Create source and Javadoc jar
@@ -34,8 +33,7 @@ jobs:
             -Poss.username=${{ secrets.OSSRH_USERNAME }}
             -Poss.password=${{ secrets.OSSRH_PASSWORD }}
             -Psigning.keyId=${{ secrets.SIGNING_KEY_ID }}
-            -Psigning.password=${{ secrets.SIGNING_PASSWORD }}
-            -PsigningsecretKeyRingFile=${{ secrets.SIGNING_KEY }}"
+            -Psigning.password=${{ secrets.SIGNING_PASSWORD }}"
 
     # Runs upload, and then closes & releases the repository
     - name: Publish to MavenCentral
@@ -44,5 +42,11 @@ jobs:
             -Poss.password=${{ secrets.OSSRH_PASSWORD }}
             -Psigning.keyId=${{ secrets.SIGNING_KEY_ID }}
             -Psigning.password=${{ secrets.SIGNING_PASSWORD }}
-            -PsigningsecretKeyRingFile=${{ secrets.SIGNING_KEY }}
             SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}"
+#      run: "./gradlew publishReleasePublicationToSonatypeRepository --max-workers 1 closeAndReleaseSonatypeStagingRepository
+#            -Poss.username=${{ secrets.OSSRH_USERNAME }}
+#            -Poss.password=${{ secrets.OSSRH_PASSWORD }}
+#            -Psigning.keyId=${{ secrets.SIGNING_KEY_ID }}
+#            -Psigning.password=${{ secrets.SIGNING_PASSWORD }}
+#            -PsigningsecretKeyRingFile=${{ secrets.SIGNING_KEY }}
+#            SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}"
