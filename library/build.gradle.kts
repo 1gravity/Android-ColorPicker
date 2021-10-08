@@ -116,6 +116,9 @@ afterEvaluate {
         publications {
             val props = project.properties
 
+            props.forEach {
+                println("#{it.key} -> ${it.value}")
+            }
             // 1. configure repositories
             repositories {
                 maven {
