@@ -29,16 +29,10 @@ jobs:
     - name: Create source and Javadoc jar
       run: "./gradlew :library:withJavadocJar :library:withSourceJar
             -Poss.username=${{ secrets.OSSRH_USERNAME }}
-            -Poss.password=${{ secrets.OSSRH_PASSWORD }}
-            -PsigningInMemoryKeyId=${{ secrets.SIGNINGINMEMORYKEYID }}
-            -PsigningInMemoryKeyPassword=${{ secrets.SIGNINGINMEMORYKEYPASSWORD }}
-            -PsigningInMemoryKey=${{ secrets.SIGNINGINMEMORYKEY }}"
+            -Poss.password=${{ secrets.OSSRH_PASSWORD }}"
 
     # Runs upload, and then closes & releases the repository
     - name: Publish to MavenCentral
       run: "./gradlew publishReleasePublicationToSonatypeRepository --max-workers 1 closeAndReleaseSonatypeStagingRepository
             -Poss.username=${{ secrets.OSSRH_USERNAME }}
-            -Poss.password=${{ secrets.OSSRH_PASSWORD }}
-            -PsigningInMemoryKeyId=${{ secrets.SIGNINGINMEMORYKEYID }}
-            -PsigningInMemoryKeyPassword=${{ secrets.SIGNINGINMEMORYKEYPASSWORD }}
-            -PsigningInMemoryKey=${{ secrets.SIGNINGINMEMORYKEY }}"
+            -Poss.password=${{ secrets.OSSRH_PASSWORD }}"
