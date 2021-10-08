@@ -21,8 +21,7 @@ jobs:
         cache: gradle
         # build release artifacts source and Javadoc jars + publish the artifacts
     - name: Build release artifacts
-      run: "./gradlew :library:assembleRelease -Poss.username=${{ secrets.OSSRH_USERNAME }}
-            -Poss.password=${{ secrets.OSSRH_PASSWORD }}"
+      run: ./gradlew :library:assembleRelease -Poss.username=${{ secrets.OSSRH_USERNAME }} -Poss.password=${{ secrets.OSSRH_PASSWORD }}
       env:
         oss.username:${{ secrets.OSSRH_USERNAME }}
         oss.password:${{ secrets.OSSRH_PASSWORD }}
