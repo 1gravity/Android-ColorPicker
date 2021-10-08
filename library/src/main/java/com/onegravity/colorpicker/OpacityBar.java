@@ -434,7 +434,7 @@ public class OpacityBar extends View {
     /**
      * Set the pointer on the bar. With the opacity value.
      *
-     * @param saturation float between 0 > 255
+     * @param opacity float between 0 and 255
      */
     public void setOpacity(int opacity) {
         mBarPointerPosition = Math.round((mOpacToPosFactor * opacity)) + mBarPointerHaloRadius;

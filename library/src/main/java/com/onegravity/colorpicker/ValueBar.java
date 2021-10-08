@@ -437,7 +437,7 @@ public class ValueBar extends View {
     /**
      * Set the pointer on the bar. With the opacity value.
      *
-     * @param value float between 0 > 1
+     * @param value float between 0 and 1
      */
     public void setValue(float value) {
         mBarPointerPosition = Math

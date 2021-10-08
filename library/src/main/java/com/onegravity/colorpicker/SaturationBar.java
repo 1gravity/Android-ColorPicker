@@ -446,7 +446,7 @@ public class SaturationBar extends View {
     /**
      * Set the pointer on the bar. With the opacity value.
      *
-     * @param saturation float between 0 > 1
+     * @param saturation float between 0 and 1
      */
     public void setSaturation(float saturation) {
         mBarPointerPosition = Math.round((mSatToPosFactor * saturation))
