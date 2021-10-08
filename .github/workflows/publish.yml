@@ -23,10 +23,7 @@ jobs:
     - name: Build release artifacts
       run: "./gradlew :library:assembleRelease
             -Poss.username=${{ secrets.OSSRH_USERNAME }}
-            -Poss.password=${{ secrets.OSSRH_PASSWORD }}
-            -PsigningInMemoryKeyId=${{ secrets.SIGNINGINMEMORYKEYID }}
-            -PsigningInMemoryKeyPassword=${{ secrets.SIGNINGINMEMORYKEYPASSWORD }}
-            -PsigningInMemoryKey=${{ secrets.SIGNINGINMEMORYKEY }}"
+            -Poss.password=${{ secrets.OSSRH_PASSWORD }}"
 
     # Generates source and Javadoc jar artifacts
     - name: Create source and Javadoc jar
