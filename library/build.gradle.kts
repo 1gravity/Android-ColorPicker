@@ -176,9 +176,6 @@ afterEvaluate {
 
             // 3. sign the artifacts
             signing {
-                props["signing.keyId"] ?: throw IllegalStateException("signing.keyId not found")
-                props["signing.password"] ?: throw IllegalStateException("signing.password not found")
-                props["signing.secretKeyRingFile"] ?: throw IllegalStateException("signing.secretKeyRingFile not found")
                 sign(publishing.publications.getByName(publicationName))
             }
         }
