@@ -116,18 +116,6 @@ afterEvaluate {
         publications {
             val props = project.properties
 
-            ext["test"] = "Emanuel"
-            ext["oss.username"] = System.getenv("OSSRH_USERNAME")
-            ext["oss.password"] = System.getenv("OSSRH_USERNAME")
-//            ext["sonatypeStagingProfileId"] = System.getenv('SONATYPE_STAGING_PROFILE_ID')
-//            ext["signing.keyId"] = System.getenv('SIGNING_KEY_ID')
-//            ext["signing.password"] = System.getenv('SIGNING_PASSWORD')
-//            ext["signing.key"] = System.getenv('SIGNING_KEY')
-
-
-            props.toSortedMap().forEach {
-                println("${it.key} -> ${it.value}")
-            }
             // 1. configure repositories
             repositories {
                 maven {
@@ -188,6 +176,9 @@ afterEvaluate {
 
             // 3. sign the artifacts
             signing {
+                props["signing.keyId"] ?: throw IllegalStateException("signing.keyId not found")
+                props["signing.password"] ?: throw IllegalStateException("signing.password not found")
+                props["signing.secretKeyRingFile"] ?: throw IllegalStateException("signing.secretKeyRingFile not found")
                 sign(publishing.publications.getByName(publicationName))
             }
         }
