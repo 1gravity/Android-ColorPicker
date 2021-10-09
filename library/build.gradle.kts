@@ -112,11 +112,6 @@ afterEvaluate {
         return uri(if (isReleaseBuild) releaseRepoUrl else snapshotRepoUrl)
     }
 
-    println("ENVIRONMENT")
-    System.getenv().toSortedMap().forEach { (key, value) ->
-        println("$key -> $value")
-    }
-
     println("PROPERTIES")
     project.properties.toSortedMap().forEach { (key, value) ->
         println("$key -> $value")
