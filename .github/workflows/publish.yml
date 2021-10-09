@@ -21,26 +21,23 @@ jobs:
         cache: gradle
         # build release artifacts source and Javadoc jars + publish the artifacts
     - name: Build release artifacts
-      run: "./gradlew :library:assembleRelease
+      run: ./gradlew :library:assembleRelease
             -Poss.username=${{ secrets.OSSRH_USERNAME }}
-            -Poss.password=${{ secrets.OSSRH_PASSWORD }}"
+            -Poss.password=${{ secrets.OSSRH_PASSWORD }}
 
     # Generates source and Javadoc jar artifacts
     - name: Create source and Javadoc jar
-      run: "./gradlew :library:withJavadocJar :library:withSourceJar
+      run: ./gradlew :library:withJavadocJar :library:withSourceJar
             -Poss.username=${{ secrets.OSSRH_USERNAME }}
-            -Poss.password=${{ secrets.OSSRH_PASSWORD }}"
+            -Poss.password=${{ secrets.OSSRH_PASSWORD }}
 
     # Runs upload, and then closes & releases the repository
     - name: Publish to MavenCentral
-      run: "./gradlew publish --max-workers 1
-            -Poss.username=${{ secrets.OSSRH_USERNAME }}
-            -Poss.password=${{ secrets.OSSRH_PASSWORD }}
-            -PsigningInMemoryKeyId=${{ secrets.SIGNINGINMEMORYKEYID }}
-            -PsigningInMemoryKeyPassword=${{ secrets.SIGNINGINMEMORYKEYPASSWORD }}
-            -signingInMemoryKey=${{ secrets.SIGNINGINMEMORYKEY }}
-            "
+      run: ./gradlew publish --max-workers 1
       env:
+        oss:
+          username:${{ secrets.OSSRH_USERNAME }}
+          password:${{ secrets.OSSRH_PASSWORD }}
         signingInMemoryKeyId: ${{ secrets.SIGNINGINMEMORYKEYID }}
         signingInMemoryKeyPassword: ${{ secrets.SIGNINGINMEMORYKEYPASSWORD }}
         signingInMemoryKey: ${{ secrets.SIGNINGINMEMORYKEY }}
