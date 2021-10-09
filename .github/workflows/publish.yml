@@ -22,23 +22,23 @@ jobs:
         # build release artifacts source and Javadoc jars + publish the artifacts
     - name: Build release artifacts
       run: ./gradlew
-            -Poss.username=${{ secrets.OSSRH_USERNAME }}
-            -Poss.password=${{ secrets.OSSRH_PASSWORD }}
+            -PossUsername=${{ secrets.OSSRH_USERNAME }}
+            -PossPassword=${{ secrets.OSSRH_PASSWORD }}
             :library:assembleRelease
 
     # Generates source and Javadoc jar artifacts
     - name: Create source and Javadoc jar
       run: ./gradlew
-            -Poss.username=${{ secrets.OSSRH_USERNAME }}
-            -Poss.password=${{ secrets.OSSRH_PASSWORD }}
+            -PossUsername=${{ secrets.OSSRH_USERNAME }}
+            -PossPassword=${{ secrets.OSSRH_PASSWORD }}
             :library:assembleRelease
             :library:withJavadocJar :library:withSourceJar
 
     # Runs upload, and then closes & releases the repository
     - name: Publish to MavenCentral
       run: ./gradlew
-            -Poss.username=${{ secrets.OSSRH_USERNAME }}
-            -Poss.password=${{ secrets.OSSRH_PASSWORD }}
+            -PossUsername=${{ secrets.OSSRH_USERNAME }}
+            -PossPassword=${{ secrets.OSSRH_PASSWORD }}
             -PsigningInMemoryKeyId=${{ secrets.SIGNINGINMEMORYKEYID }}
             -PsigningInMemoryKeyPassword=${{ secrets.SIGNINGINMEMORYKEYPASSWORD }}
             -PsigningInMemoryKey=${{ secrets.SIGNINGINMEMORYKEY }}
