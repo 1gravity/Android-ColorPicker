@@ -43,9 +43,9 @@ jobs:
             -PsigningInMemoryKeyPassword=${{ secrets.SIGNINGINMEMORYKEYPASSWORD }}
             -PsigningInMemoryKey=${{ secrets.SIGNINGINMEMORYKEY }}
             publish --max-workers 1
-      env:
-        ossUsername: ${{ secrets.OSSRH_USERNAME }}
-        ossPassword: ${{ secrets.OSSRH_PASSWORD }}
-        signingInMemoryKeyId: ${{ secrets.SIGNINGINMEMORYKEYID }}
-        signingInMemoryKeyPassword: ${{ secrets.SIGNINGINMEMORYKEYPASSWORD }}
-        signingInMemoryKey: ${{ secrets.SIGNINGINMEMORYKEY }}
+#      env:
+#        ossUsername: ${{ secrets.OSSRH_USERNAME }}
+#        ossPassword: ${{ secrets.OSSRH_PASSWORD }}
+#        signingInMemoryKeyId: ${{ secrets.SIGNINGINMEMORYKEYID }}
+#        signingInMemoryKeyPassword: ${{ secrets.SIGNINGINMEMORYKEYPASSWORD }}
+#        signingInMemoryKey: ${{ secrets.SIGNINGINMEMORYKEY }}
