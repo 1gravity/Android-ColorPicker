@@ -24,6 +24,9 @@ jobs:
       run: ./gradlew
             -PossUsername=${{ secrets.OSSRH_USERNAME }}
             -PossPassword=${{ secrets.OSSRH_PASSWORD }}
+            -PsigningInMemoryKeyId=${{ secrets.SIGNINGINMEMORYKEYID }}
+            -PsigningInMemoryKeyPassword="${{ secrets.SIGNINGINMEMORYKEYPASSWORD }}"
+            -PsigningInMemoryKey="${{ secrets.SIGNINGINMEMORYKEY }}"
             :library:assembleRelease
 
     # Generates source and Javadoc jar artifacts
@@ -31,6 +34,9 @@ jobs:
       run: ./gradlew
             -PossUsername=${{ secrets.OSSRH_USERNAME }}
             -PossPassword=${{ secrets.OSSRH_PASSWORD }}
+            -PsigningInMemoryKeyId=${{ secrets.SIGNINGINMEMORYKEYID }}
+            -PsigningInMemoryKeyPassword="${{ secrets.SIGNINGINMEMORYKEYPASSWORD }}"
+            -PsigningInMemoryKey="${{ secrets.SIGNINGINMEMORYKEY }}"
             :library:assembleRelease
             :library:withJavadocJar :library:withSourceJar
 
