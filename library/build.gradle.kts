@@ -50,7 +50,7 @@ dependencies {
     api("androidx.preference:preference:1.1.1")
 
     // used for the material design (dialogs and tab layout)
-    api("androidx.appcompat:appcompat:1.3.1")
+    api("androidx.appcompat:appcompat:1.4.0")
 }
 
 tasks {
