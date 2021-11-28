@@ -28,7 +28,7 @@ Setup
 Add this to your Gradle build file:
 ```
 dependencies {
-    compile 'com.1gravity:android-colorpicker:2.2.2'
+    compile 'com.1gravity:android-colorpicker:2.2.3'
 }
 ```
 
