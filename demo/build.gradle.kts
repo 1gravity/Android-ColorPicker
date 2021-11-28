@@ -44,7 +44,7 @@ dependencies {
     // use this to compile/run locally
     implementation(project(":library"))
     // or this to use the latest published library
-//    implementation("com.1gravity:android-colorpicker:2.2.3")
+//    implementation("com.1gravity:android-colorpicker:_")
 
-    implementation("androidx.preference:preference:1.1.1")
+    implementation(AndroidX.preference)
 }
