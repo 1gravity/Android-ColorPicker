@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2021 Emanuel Moecklin
+ * Copyright (C) 2015-2022 Emanuel Moecklin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    id("com.github.triplet.play")
 }
 
 android {
@@ -37,6 +37,31 @@ android {
 
     buildFeatures {
         viewBinding = true
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file(project.property("ONEGRAVITY_KEYSTORE_FILE").toString())
+            storePassword = project.property("ONEGRAVITY_KEYSTORE_PASSWORD").toString()
+            keyAlias = project.property("ONEGRAVITY_SUDOKU10k_KEY_ALIAS").toString()
+            keyPassword = project.property("ONEGRAVITY_SUDOKU10k_KEY_PASSWORD").toString()
+        }
+    }
+
+    buildTypes {
+        getByName("debug") {
+            isDebuggable = true
+            isMinifyEnabled = false
+            isShrinkResources = false
+            signingConfig = signingConfigs.getByName(name)
+        }
+
+        getByName("release") {
+            isDebuggable = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            signingConfig = signingConfigs.getByName(name)
+        }
     }
 }
 
