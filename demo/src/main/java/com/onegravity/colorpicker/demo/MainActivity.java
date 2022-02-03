@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         outState.putInt("mBackgroundColor", mBackgroundColor);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onClick(View v) {
         int id = v.getId();

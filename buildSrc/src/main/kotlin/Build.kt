@@ -19,4 +19,5 @@ object Build {
     const val compileSdkVersion = 31
     const val minSdkVersion = 16
     const val targetSdkVersion = 31
+    const val versionName = "1.1.0"
 }

@@ -28,6 +28,12 @@ android {
         applicationId = "com.onegravity.colorpicker.demo"
         minSdk = Build.minSdkVersion
         targetSdk = Build.targetSdkVersion
+
+        val props = project.properties
+        versionCode = (props["BUILD_NUMBER"] ?: "1643908189")
+            .toString().toInt()
+            .minus(1643908089)
+        versionName = Build.versionName
     }
 
     compileOptions {
@@ -72,4 +78,10 @@ dependencies {
 //    implementation("com.1gravity:android-colorpicker:_")
 
     implementation(AndroidX.preference)
+}
+
+play {
+    val apiKeyFile = project.property("googlePlayApiKey").toString()
+    serviceAccountCredentials.set(file(apiKeyFile))
+    track.set("internal")
 }
