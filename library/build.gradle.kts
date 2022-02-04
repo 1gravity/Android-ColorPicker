@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2021 Emanuel Moecklin
+ * Copyright (C) 2015-2022 Emanuel Moecklin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,8 +36,8 @@ android {
     }
 
     lint {
-        isAbortOnError = true
-        disable("UnusedResources")
+        abortOnError = true
+        disable += "UnusedResources"
     }
 
     compileOptions {
@@ -122,8 +122,8 @@ afterEvaluate {
                     url = getRepositoryUrl()
                     // credentials are stored in ~/.gradle/gradle.properties with ~ being the path of the home directory
                     credentials {
-                        username = props["ossUsername"]?.toString() ?: throw IllegalStateException("ossUsername not found")
-                        password = props["ossPassword"]?.toString() ?: throw IllegalStateException("ossPassword not found")
+                        username = props["ossUsername"]?.toString() ?: "ossUsername not found"
+                        password = props["ossPassword"]?.toString() ?: "ossPassword not found"
                     }
                 }
             }
@@ -176,12 +176,9 @@ afterEvaluate {
 
             // 3. sign the artifacts
             signing {
-                val signingKeyId = props["signingKeyId"]?.toString()
-                    ?: throw IllegalStateException("signingKeyId not found")
-                val signingKeyPassword = props["signingKeyPassword"]?.toString()
-                    ?: throw IllegalStateException("signingKeyPassword not found")
-                val signingKey = props["signingKey"]?.toString()
-                    ?: throw IllegalStateException("signingKey not found")
+                val signingKeyId = props["signingKeyId"]?.toString() ?: "signingKeyId not found"
+                val signingKeyPassword = props["signingKeyPassword"]?.toString() ?: "signingKeyPassword not found"
+                val signingKey = props["signingKey"]?.toString() ?: "signingKey not found"
                 useInMemoryPgpKeys(signingKeyId, signingKey, signingKeyPassword)
                 sign(publishing.publications.getByName(publicationName))
             }
