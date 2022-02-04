@@ -30,7 +30,7 @@ jobs:
         id: decode_keystore
         uses: timheuer/base64-to-file@v1.1
         with:
-          fileDir: './demo/secrets'
+          fileDir: './secrets'
           fileName: '1gravity.keystore'
           encodedString: ${{ secrets.KEYSTORE_FILE }}
 
@@ -39,12 +39,12 @@ jobs:
         id: decode_api_key
         uses: timheuer/base64-to-file@v1.1
         with:
-          fileDir: './demo/secrets'
+          fileDir: './secrets'
           fileName: 'google-play-api-key.json'
           encodedString: ${{ secrets.GOOGLE_PLAY_API_KEY }}
 
-      # build release artifacts
-      - name: Build release artifacts
+      # Build bundle and publish to Google Play
+      - name: Build & publish to Google Play
         run: ./gradlew
           -PBUILD_NUMBER="${{ env.BUILD_NUMBER }}"
           -PgooglePlayApiKey=${{ steps.decode_api_key.outputs.filePath }}
@@ -52,15 +52,4 @@ jobs:
           -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
           -PONEGRAVITY_OPENSOURCE_KEY_ALIAS=${{ secrets.KEY_ALIAS }}
           -PONEGRAVITY_OPENSOURCE_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
-          :demo:bundleRelease --stacktrace
-
-      # Publish to Google Play
-      - name: Publish to Google Play
-        run: ./gradlew
-          -PBUILD_NUMBER="${{ env.BUILD_NUMBER }}"
-          -PgooglePlayApiKey=${{ steps.decode_api_key.outputs.filePath }}
-          -PONEGRAVITY_KEYSTORE_FILE=${{ steps.decode_keystore.outputs.filePath }}
-          -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
-          -PONEGRAVITY_OPENSOURCE_KEY_ALIAS=${{ secrets.KEY_ALIAS }}
-          -PONEGRAVITY_OPENSOURCE_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
-          :demo:publishBundle --max-workers 1
+          publishBundle --max-workers 1 --stacktrace
