@@ -38,7 +38,7 @@ jobs:
         run: ./gradlew
           -pBUILD_NUMBER=="${{ env.BUILD_NUMBER }}"
           -PgooglePlayApiKey="${{ secrets.GOOGLE_PLAY_API_KEY }}"
-          -PONEGRAVITY_KEYSTORE_FILE="keystore/1gravity.keystore
+          -PONEGRAVITY_KEYSTORE_FILE="keystore/1gravity.keystore"
           -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
           -PONEGRAVITY_SUDOKU10k_KEY_ALIAS=${{ secrets.KEY_ALIAS }}
           -PONEGRAVITY_SUDOKU10k_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
