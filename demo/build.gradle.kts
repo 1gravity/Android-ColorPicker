@@ -45,12 +45,18 @@ android {
         viewBinding = true
     }
 
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     signingConfigs {
         create("release") {
             storeFile = file(project.property("ONEGRAVITY_KEYSTORE_FILE").toString())
             storePassword = project.property("ONEGRAVITY_KEYSTORE_PASSWORD").toString()
-            keyAlias = project.property("ONEGRAVITY_SUDOKU10k_KEY_ALIAS").toString()
-            keyPassword = project.property("ONEGRAVITY_SUDOKU10k_KEY_PASSWORD").toString()
+            keyAlias = project.property("ONEGRAVITY_OPENSOURCE_KEY_ALIAS").toString()
+            keyPassword = project.property("ONEGRAVITY_OPENSOURCE_KEY_PASSWORD").toString()
         }
     }
 

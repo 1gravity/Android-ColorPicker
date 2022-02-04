@@ -38,30 +38,20 @@ jobs:
       - name: Build release artifacts
         run: ./gradlew
           -pBUILD_NUMBER=="${{ env.BUILD_NUMBER }}"
-          -PossUsername=${{ secrets.OSSRH_USERNAME }}
-          -PossPassword=${{ secrets.OSSRH_PASSWORD }}
-          -PsigningKeyId=${{ secrets.SIGNINGKEYID }}
-          -PsigningKeyPassword="${{ secrets.SIGNINGKEYPASSWORD }}"
-          -PsigningKey="${{ secrets.SIGNINGKEY }}"
           -PgooglePlayApiKey="${{ secrets.GOOGLE_PLAY_API_KEY }}"
           -PONEGRAVITY_KEYSTORE_FILE="${RUNNER_TEMP}"/keystore/1gravity.keystore
           -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
           -PONEGRAVITY_SUDOKU10k_KEY_ALIAS=${{ secrets.KEY_ALIAS }}
           -PONEGRAVITY_SUDOKU10k_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
-          :demo:assembleRelease
+          :demo:bundleRelease
 
       # Publish to Google Play
       - name: Publish to Google Play
         run: ./gradlew
           -pBUILD_NUMBER==$BUILD_NUMBER
-          -PossUsername=${{ secrets.OSSRH_USERNAME }}
-          -PossPassword=${{ secrets.OSSRH_PASSWORD }}
-          -PsigningKeyId=${{ secrets.SIGNINGKEYID }}
-          -PsigningKeyPassword="${{ secrets.SIGNINGKEYPASSWORD }}"
-          -PsigningKey="${{ secrets.SIGNINGKEY }}"
           -PgooglePlayApiKey="${{ secrets.GOOGLE_PLAY_API_KEY }}"
           -PONEGRAVITY_KEYSTORE_FILE="${RUNNER_TEMP}"/keystore/1gravity.keystore
           -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
           -PONEGRAVITY_SUDOKU10k_KEY_ALIAS=${{ secrets.KEY_ALIAS }}
           -PONEGRAVITY_SUDOKU10k_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
-          publish --max-workers 1
+          :demo:publishBundle --max-workers 1
