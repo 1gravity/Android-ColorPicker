@@ -25,20 +25,28 @@ jobs:
         run: |
           echo "BUILD_NUMBER=$(date +"%s")" >> ${GITHUB_ENV}
 
-      # Decode the keystore file for signing the demo app
+      # Decode the keystore file containing the signing key
       - name: Decode Keystore
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
         with:
-          fileName: 'keystore/1gravity.keystore'
+          fileName: 'secrets/1gravity.keystore'
           encodedString: ${{ secrets.KEYSTORE_FILE }}
+
+      # Decode the Google Play api key file
+      - name: Decode Google Play API key
+        id: decode_api_key
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'secrets/google-play-api-key.json'
+          encodedString: ${{ secrets.GOOGLE_PLAY_API_KEY }}
 
       # build release artifacts
       - name: Build release artifacts
         run: ./gradlew
           -pBUILD_NUMBER="${{ env.BUILD_NUMBER }}"
-          -PgooglePlayApiKey="${{ secrets.GOOGLE_PLAY_API_KEY }}"
-          -PONEGRAVITY_KEYSTORE_FILE="keystore/1gravity.keystore"
+          -PgooglePlayApiKey="secrets/1gravity.keystore"
+          -PONEGRAVITY_KEYSTORE_FILE="secrets/google-play-api-key.json"
           -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
           -PONEGRAVITY_SUDOKU10k_KEY_ALIAS=${{ secrets.KEY_ALIAS }}
           -PONEGRAVITY_SUDOKU10k_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
@@ -48,8 +56,8 @@ jobs:
       - name: Publish to Google Play
         run: ./gradlew
           -pBUILD_NUMBER="${{ env.BUILD_NUMBER }}"
-          -PgooglePlayApiKey="${{ secrets.GOOGLE_PLAY_API_KEY }}"
-          -PONEGRAVITY_KEYSTORE_FILE="keystore/1gravity.keystore"
+          -PgooglePlayApiKey="secrets/1gravity.keystore"
+          -PONEGRAVITY_KEYSTORE_FILE="secrets/google-play-api-key.json"
           -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
           -PONEGRAVITY_SUDOKU10k_KEY_ALIAS=${{ secrets.KEY_ALIAS }}
           -PONEGRAVITY_SUDOKU10k_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
