@@ -122,8 +122,8 @@ afterEvaluate {
                     url = getRepositoryUrl()
                     // credentials are stored in ~/.gradle/gradle.properties with ~ being the path of the home directory
                     credentials {
-                        username = props["ossUsername"]?.toString() ?: throw IllegalStateException("ossUsername not found")
-                        password = props["ossPassword"]?.toString() ?: throw IllegalStateException("ossPassword not found")
+                        username = props["ossUsername"]?.toString() ?: "ossUsername not found"
+                        password = props["ossPassword"]?.toString() ?: "ossPassword not found"
                     }
                 }
             }
