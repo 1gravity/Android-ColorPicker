@@ -51,6 +51,9 @@ android {
         }
     }
 
+    project.properties.forEach {
+        println("${it.key} -> ${it.value}")
+    }
     signingConfigs {
         create("release") {
             storeFile = file(project.property("ONEGRAVITY_KEYSTORE_FILE").toString())
