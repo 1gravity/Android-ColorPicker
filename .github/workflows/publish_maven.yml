@@ -25,6 +25,7 @@ jobs:
           -PsigningKeyId=${{ secrets.SIGNINGKEYID }}
           -PsigningKeyPassword="${{ secrets.SIGNINGKEYPASSWORD }}"
           -PsigningKey="${{ secrets.SIGNINGKEY }}"
+          -PBUILD_NUMBER="1"
           :library:assembleRelease
 
       # Generates source and Javadoc jar artifacts
@@ -35,6 +36,7 @@ jobs:
           -PsigningKeyId=${{ secrets.SIGNINGKEYID }}
           -PsigningKeyPassword="${{ secrets.SIGNINGKEYPASSWORD }}"
           -PsigningKey="${{ secrets.SIGNINGKEY }}"
+          -PBUILD_NUMBER="1"
           :library:withJavadocJar :library:withSourceJar
 
       # Runs upload, and then closes & releases the repository
@@ -45,4 +47,5 @@ jobs:
           -PsigningKeyId=${{ secrets.SIGNINGKEYID }}
           -PsigningKeyPassword="${{ secrets.SIGNINGKEYPASSWORD }}"
           -PsigningKey="${{ secrets.SIGNINGKEY }}"
+          -PBUILD_NUMBER="1"
           publish --max-workers 1
