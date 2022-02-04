@@ -30,16 +30,9 @@ android {
         targetSdk = Build.targetSdkVersion
 
         val props = project.properties
-
-        props.forEach {
-            println("${it.key} -> ${it.value}")
-        }
-
         versionCode = (props["BUILD_NUMBER"] ?: "1643908189")
             .toString().toInt()
             .minus(1643908089)
-
-        println(versionCode)
 
         versionName = Build.versionName
     }
