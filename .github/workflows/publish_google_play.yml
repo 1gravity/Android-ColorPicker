@@ -37,7 +37,7 @@ jobs:
       # build release artifacts
       - name: Build release artifacts
         run: ./gradlew
-          -pBUILD_NUMBER==$BUILD_NUMBER
+          -pBUILD_NUMBER=="${{ env.BUILD_NUMBER }}"
           -PossUsername=${{ secrets.OSSRH_USERNAME }}
           -PossPassword=${{ secrets.OSSRH_PASSWORD }}
           -PsigningKeyId=${{ secrets.SIGNINGKEYID }}
