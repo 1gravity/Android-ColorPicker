@@ -44,7 +44,7 @@ jobs:
       # build release artifacts
       - name: Build release artifacts
         run: ./gradlew
-          -pBUILD_NUMBER="${{ env.BUILD_NUMBER }}"
+          -PBUILD_NUMBER="${{ env.BUILD_NUMBER }}"
           -PgooglePlayApiKey="secrets/1gravity.keystore"
           -PONEGRAVITY_KEYSTORE_FILE="secrets/google-play-api-key.json"
           -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
@@ -55,7 +55,7 @@ jobs:
       # Publish to Google Play
       - name: Publish to Google Play
         run: ./gradlew
-          -pBUILD_NUMBER="${{ env.BUILD_NUMBER }}"
+          -PBUILD_NUMBER="${{ env.BUILD_NUMBER }}"
           -PgooglePlayApiKey="secrets/1gravity.keystore"
           -PONEGRAVITY_KEYSTORE_FILE="secrets/google-play-api-key.json"
           -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
