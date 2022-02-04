@@ -27,19 +27,18 @@ jobs:
 
       # Decode the keystore file for signing the demo app
       - name: Decode Keystore
-        env:
-          ENCODED_STRING: ${{ secrets.KEYSTORE_FILE }}
-        run: |
-          TMP_KEYSTORE_FILE_PATH="${RUNNER_TEMP}"/keystore
-          mkdir "${TMP_KEYSTORE_FILE_PATH}"
-          echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/1gravity.keystore
+        id: decode_keystore
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'keystore/1gravity.keystore'
+          encodedString: ${{ secrets.KEYSTORE_FILE }}
 
       # build release artifacts
       - name: Build release artifacts
         run: ./gradlew
           -pBUILD_NUMBER=="${{ env.BUILD_NUMBER }}"
           -PgooglePlayApiKey="${{ secrets.GOOGLE_PLAY_API_KEY }}"
-          -PONEGRAVITY_KEYSTORE_FILE="${RUNNER_TEMP}"/keystore/1gravity.keystore
+          -PONEGRAVITY_KEYSTORE_FILE="keystore/1gravity.keystore
           -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
           -PONEGRAVITY_SUDOKU10k_KEY_ALIAS=${{ secrets.KEY_ALIAS }}
           -PONEGRAVITY_SUDOKU10k_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
