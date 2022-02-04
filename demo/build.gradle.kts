@@ -29,10 +29,9 @@ android {
         minSdk = Build.minSdkVersion
         targetSdk = Build.targetSdkVersion
 
-        val props = project.properties
-        versionCode = (props["BUILD_NUMBER"] ?: "1643908189")
-            .toString().toInt()
-            .minus(1643908089)
+        versionCode = project.property("BUILD_NUMBER")
+            ?.toString()?.toInt()?.minus(1643908089)
+            ?: 124
 
         versionName = Build.versionName
     }
