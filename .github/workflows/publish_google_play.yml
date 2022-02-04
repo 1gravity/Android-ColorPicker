@@ -50,7 +50,7 @@ jobs:
           -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
           -PONEGRAVITY_OPENSOURCE_KEY_ALIAS=${{ secrets.KEY_ALIAS }}
           -PONEGRAVITY_OPENSOURCE_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
-          :demo:bundleRelease
+          :demo:bundleRelease --stacktrace
 
       # Publish to Google Play
       - name: Publish to Google Play
