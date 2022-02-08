@@ -17,7 +17,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    id("com.github.triplet.play")
+    id("com.github.triplet.play") version "3.7.0"
 }
 
 android {
