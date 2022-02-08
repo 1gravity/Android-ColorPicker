@@ -29,7 +29,7 @@ android {
         minSdk = Build.minSdkVersion
         targetSdk = Build.targetSdkVersion
 
-        versionCode = project.property("BUILD_NUMBER")
+        versionCode = project.properties["BUILD_NUMBER"]
             ?.toString()?.toInt()?.minus(1643908089)
             ?: 124
 
