@@ -1,9 +1,5 @@
 name: CI/CD Maven Central
 
-#on:
-#  push:
-#    branches:
-#      - master
 on: workflow_dispatch
 
 jobs:
