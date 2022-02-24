@@ -1,4 +1,4 @@
-# to trigger the actopn push a tag to the master branch:
+# to trigger the action push a tag to the master branch:
 #   git tag vx.y.z (e.g. git tag v1.2.7)
 #   git push origin --tags
 # deleting tags:
