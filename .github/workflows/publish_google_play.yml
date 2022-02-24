@@ -1,7 +1,16 @@
+# to trigger the actopn push a tag to the master branch:
+#   git tag vx.y.z (e.g. git tag v1.2.7)
+#   git push origin --tags
+# deleting tags:
+#   git tag -d vx.y.z (e.g. git tag -d v1.2.7)
+#   git push --delete origin vx.y.z (e.g. git push --delete origin v1.2.7)
+
 name: CI/CD Google Play
 
 on:
   push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
     branches: [ master ]
 
 jobs:
