@@ -2,7 +2,8 @@ name: CI/CD Maven Central
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   build:
