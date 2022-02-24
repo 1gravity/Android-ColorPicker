@@ -11,12 +11,10 @@ on:
   push:
     branches:
       - master
-    tags:
-      - v*
 
 jobs:
   build:
-
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     runs-on: ubuntu-latest
 
     steps:
