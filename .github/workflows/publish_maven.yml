@@ -1,6 +1,18 @@
 name: CI/CD Maven Central
 
-on: workflow_dispatch
+on:
+  push:
+    branches: [ master ]
+
+env:
+  ossUsername: ${{ secrets.OSSRH_USERNAME }}
+  ossPassword: ${{ secrets.OSSRH_PASSWORD }}
+  signingKeyId: ${{ secrets.SIGNINGKEYID }}
+  signingKeyPassword: ${{ secrets.SIGNINGKEYPASSWORD }}
+  signingKey: ${{ secrets.SIGNINGKEY }}
+  ONEGRAVITY_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+  ONEGRAVITY_OPENSOURCE_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+  ONEGRAVITY_OPENSOURCE_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
 jobs:
   build:
@@ -42,48 +54,16 @@ jobs:
           encodedString: ${{ secrets.GOOGLE_PLAY_API_KEY }}
 
       - name: Build release artifacts
-        run: ./gradlew
-          -PossUsername=${{ secrets.OSSRH_USERNAME }}
-          -PossPassword=${{ secrets.OSSRH_PASSWORD }}
-          -PsigningKeyId=${{ secrets.SIGNINGKEYID }}
-          -PsigningKeyPassword="${{ secrets.SIGNINGKEYPASSWORD }}"
-          -PsigningKey="${{ secrets.SIGNINGKEY }}"
-          -PBUILD_NUMBER="${{ env.BUILD_NUMBER }}"
-          -PgooglePlayApiKey="../${{ steps.decode_api_key.outputs.filePath }}"
-          -PONEGRAVITY_KEYSTORE_FILE="../${{ steps.decode_keystore.outputs.filePath }}"
-          -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
-          -PONEGRAVITY_OPENSOURCE_KEY_ALIAS=${{ secrets.KEY_ALIAS }}
-          -PONEGRAVITY_OPENSOURCE_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
-          :library:assembleRelease
+        run: ./gradlew :RTEditor:assembleRelease --stacktrace
 
       # Generates source and Javadoc jar artifacts
       - name: Create source and Javadoc jar
-        run: ./gradlew
-          -PossUsername=${{ secrets.OSSRH_USERNAME }}
-          -PossPassword=${{ secrets.OSSRH_PASSWORD }}
-          -PsigningKeyId=${{ secrets.SIGNINGKEYID }}
-          -PsigningKeyPassword="${{ secrets.SIGNINGKEYPASSWORD }}"
-          -PsigningKey="${{ secrets.SIGNINGKEY }}"
-          -PBUILD_NUMBER="${{ env.BUILD_NUMBER }}"
-          -PgooglePlayApiKey="../${{ steps.decode_api_key.outputs.filePath }}"
-          -PONEGRAVITY_KEYSTORE_FILE="../${{ steps.decode_keystore.outputs.filePath }}"
-          -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
-          -PONEGRAVITY_OPENSOURCE_KEY_ALIAS=${{ secrets.KEY_ALIAS }}
-          -PONEGRAVITY_OPENSOURCE_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
-          :library:withJavadocJar :library:withSourceJar
+        run: ./gradlew :RTEditor:withJavadocJar :RTEditor:withSourceJar --stacktrace
 
       # Runs upload, and then closes & releases the repository
       - name: Publish to MavenCentral
         run: ./gradlew
-          -PossUsername=${{ secrets.OSSRH_USERNAME }}
-          -PossPassword=${{ secrets.OSSRH_PASSWORD }}
-          -PsigningKeyId=${{ secrets.SIGNINGKEYID }}
-          -PsigningKeyPassword="${{ secrets.SIGNINGKEYPASSWORD }}"
-          -PsigningKey="${{ secrets.SIGNINGKEY }}"
           -PBUILD_NUMBER="${{ env.BUILD_NUMBER }}"
-          -PgooglePlayApiKey="../${{ steps.decode_api_key.outputs.filePath }}"
           -PONEGRAVITY_KEYSTORE_FILE="../${{ steps.decode_keystore.outputs.filePath }}"
-          -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
-          -PONEGRAVITY_OPENSOURCE_KEY_ALIAS=${{ secrets.KEY_ALIAS }}
-          -PONEGRAVITY_OPENSOURCE_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
-          publish --max-workers 1
+          -PgooglePlayApiKey="../${{ steps.decode_api_key.outputs.filePath }}"
+          publish --max-workers 1 --stacktrace
