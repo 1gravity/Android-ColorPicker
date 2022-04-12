@@ -54,11 +54,11 @@ jobs:
           encodedString: ${{ secrets.GOOGLE_PLAY_API_KEY }}
 
       - name: Build release artifacts
-        run: ./gradlew :RTEditor:assembleRelease --stacktrace
+        run: ./gradlew :library:assembleRelease --stacktrace
 
       # Generates source and Javadoc jar artifacts
       - name: Create source and Javadoc jar
-        run: ./gradlew :RTEditor:withJavadocJar :RTEditor:withSourceJar --stacktrace
+        run: ./gradlew :library:withJavadocJar :library:withSourceJar --stacktrace
 
       # Runs upload, and then closes & releases the repository
       - name: Publish to MavenCentral
