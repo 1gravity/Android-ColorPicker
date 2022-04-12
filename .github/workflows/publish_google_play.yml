@@ -1,6 +1,8 @@
 name: CI/CD Google Play
 
-on: workflow_dispatch
+on:
+  push:
+    branches: [ master ]
 
 env:
   ossUsername: ${{ secrets.OSSRH_USERNAME }}
