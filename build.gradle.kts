@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2022 Emanuel Moecklin
+ * Copyright (C) 2015-2023 Emanuel Moecklin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        maven("https://oss.sonatype.org/content/repositories/snapshots")
+        gradlePluginPortal()
     }
 
     dependencies {
@@ -27,10 +27,15 @@ buildscript {
     }
 }
 
+plugins {
+    id("com.github.triplet.play") apply false
+}
+
 allprojects {
     repositories {
         google()
         mavenCentral()
         maven("https://jitpack.io")
+        maven("https://oss.sonatype.org/content/repositories/snapshots")
     }
 }

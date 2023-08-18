@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2022 Emanuel Moecklin
+ * Copyright (C) 2015-2023 Emanuel Moecklin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,14 @@
 
 plugins {
     id("com.android.library")
+    kotlin("android")
     id("maven-publish")
     id("signing")
 }
 
 android {
+    namespace = "com.onegravity.colorpicker"
+
     compileSdk = Build.compileSdkVersion
     buildToolsVersion = Build.buildToolsVersion
 
@@ -29,20 +32,14 @@ android {
         targetSdk = Build.targetSdkVersion
     }
 
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
-
     lint {
         abortOnError = true
         disable += "UnusedResources"
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -117,8 +114,6 @@ afterEvaluate {
 
     publishing {
         publications {
-            val props = project.properties
-
             // 1. configure repositories
             repositories {
                 maven {
@@ -132,11 +127,14 @@ afterEvaluate {
             }
 
             // 2. configure publication
-            val publicationName = props["POM_NAME"]?.toString() ?: "publication"
+            val publicationName = project.get("POM_NAME", "publication")
             create<MavenPublication>(publicationName) {
                 from(project.components["release"])
+
                 artifact(tasks.named<Jar>("withJavadocJar"))
-                artifact(tasks.named<Jar>("withSourcesJar"))
+                tasks.named("generateMetadataFileFor${rootProject.name}Publication") {
+                    dependsOn("withSourcesJar")
+                }
 
                 pom {
                     groupId = project.get("POM_GROUP_ID")

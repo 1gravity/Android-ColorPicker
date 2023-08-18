@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2022 Emanuel Moecklin
+ * Copyright (C) 2015-2023 Emanuel Moecklin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,15 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("kapt")
-    id("com.github.triplet.play") version "3.7.0"
+    id("com.github.triplet.play")
 }
 
 fun Project.get(name: String, def: String = "$name not found") =
     properties[name]?.toString() ?: System.getenv(name) ?: def
 
 android {
+    namespace = "com.onegravity.colorpicker.demo"
+
     compileSdk = Build.compileSdkVersion
     buildToolsVersion = Build.buildToolsVersion
 
